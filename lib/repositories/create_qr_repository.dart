@@ -1,0 +1,5 @@
+class CreateQrRepository{
+  const CreateQrRepository();
+
+
+}
