@@ -35,7 +35,7 @@ List<BottomNavigationBarItem> bottomNavigationBarItemsList() {
     const BottomNavigationBarItem(
       icon: SizedBox(
         child: Icon(
-          Icons.home_filled,
+          Icons.widgets,
         ),
       ),
       label: "Home",
@@ -43,7 +43,7 @@ List<BottomNavigationBarItem> bottomNavigationBarItemsList() {
     const BottomNavigationBarItem(
       icon: SizedBox(
         child: Icon(
-          Icons.widgets,
+          Icons.view_list_rounded,
         ),
       ),
       label: "List",

@@ -21,9 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SafeArea(
           child: Center(
             child: Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: homeMainElements(),
+              spacing: 20,
+              runSpacing: 20,
+              children: homeMainElements(context),
             ),
           ),
         ),

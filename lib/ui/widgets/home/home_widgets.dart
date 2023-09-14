@@ -1,47 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_code/resources/resources.dart';
 import 'package:qr_code/ui/widgets/common_widgets.dart';
 
-Widget homeMainElementWidget(String text, IconData iconData, Color color) {
-  return Container(
-    height: 150.w,
-    width: 150.w,
-    color: ColorProvider.mainElement,
-    child: Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          margin: EdgeInsets.only(bottom: 15.w),
-          width: 75.w,
-          height: 75.w,
-          decoration:
-              BoxDecoration(shape: BoxShape.circle, color: color, boxShadow: [
-            BoxShadow(
+Widget homeMainElementWidget(
+    String text, IconData iconData, Color color, BuildContext context) {
+  return GestureDetector(
+    onTap: () {
+      context.go('/home/${text.toLowerCase()}');
+    },
+    child: Container(
+      height: 150.w,
+      width: 150.w,
+      decoration: BoxDecoration(
+          color: ColorProvider.mainElement,
+          borderRadius: BorderRadius.circular(25)),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.only(bottom: 15.w),
+            width: 75.w,
+            height: 75.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
               color: color,
-              blurRadius: 10.0,
-              spreadRadius: 1.0,
+              boxShadow: [
+                BoxShadow(
+                  color: color,
+                  blurRadius: 10.0,
+                  spreadRadius: 1.0,
+                ),
+              ],
             ),
-          ],),
-          child: Icon(
-            iconData,
-            size: 33.w,
+            child: Icon(
+              iconData,
+              size: 33.w,
+              color: Colors.white,
+            ),
           ),
-        ),
-        reusableText(text, fontColor: color),
-      ],
+          reusableText(text, fontColor: color),
+        ],
+      ),
     ),
   );
 }
 
-List<Widget> homeMainElements() {
+List<Widget> homeMainElements(BuildContext context) {
   return [
-    homeMainElementWidget("VCard", Icons.contact_emergency, Colors.white),
-    homeMainElementWidget("Wifi", Icons.wifi, Colors.white),
-    homeMainElementWidget("Sms", Icons.message, Colors.white),
-    homeMainElementWidget("Url", Icons.web, Colors.white),
-    homeMainElementWidget("Email", Icons.email, Colors.white),
-    homeMainElementWidget("Facebook", Icons.facebook, Colors.white),
+    homeMainElementWidget(
+        "VCard", Icons.contact_emergency, const Color(0xFF14c349), context),
+    homeMainElementWidget("Wifi", Icons.wifi, const Color(0xFF5b83ee), context),
+    homeMainElementWidget(
+        "Sms", Icons.message, const Color(0xFF7850f5), context),
+    homeMainElementWidget("Url", Icons.web, const Color(0xFFf451d8), context),
+    homeMainElementWidget(
+        "Email", Icons.email, const Color(0xFF329bef), context),
+    homeMainElementWidget(
+        "Facebook", Icons.facebook, const Color(0xFFf48842), context),
   ];
 }

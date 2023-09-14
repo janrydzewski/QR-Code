@@ -25,7 +25,62 @@ class MyRouter {
                 child: HomeScreen(),
               );
             },
-   
+            routes: <RouteBase>[
+              GoRoute(
+                name: 'VCard',
+                path: 'vcard',
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: VCardScreen(),
+                  );
+                },
+              ),
+              GoRoute(
+                name: 'Wifi',
+                path: 'wifi',
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: WifiScreen(),
+                  );
+                },
+              ),
+              GoRoute(
+                name: 'Sms',
+                path: 'sms',
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: SmsScreen(),
+                  );
+                },
+              ),
+              GoRoute(
+                name: 'Url',
+                path: 'url',
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: UrlScreen(),
+                  );
+                },
+              ),
+              GoRoute(
+                name: 'Email',
+                path: 'email',
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: EmailScreen(),
+                  );
+                },
+              ),
+              GoRoute(
+                name: 'Facebook',
+                path: 'facebook',
+                pageBuilder: (context, state) {
+                  return const NoTransitionPage(
+                    child: FacebookScreen(),
+                  );
+                },
+              ),
+            ],
           ),
           GoRoute(
             name: 'List',
@@ -36,7 +91,6 @@ class MyRouter {
               );
             },
           ),
-          
         ],
       ),
     ],
