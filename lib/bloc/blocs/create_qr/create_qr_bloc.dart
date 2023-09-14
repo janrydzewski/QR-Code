@@ -18,44 +18,89 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
   }
 
   _onGenerateEmailEvent(GenerateEmailEvent event, Emitter<CreateQrState> emit) {
-    emit(CreateQrLoading());
-    try {} catch (e) {
+    emit(const CreateQrLoading());
+    try {
+      String result = createQrRepository.createEmailQrCode(
+        event.email,
+        event.subject,
+        event.message,
+      );
+      print(result);
+    } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
   }
 
   _onGenerateFacebookEvent(
       GenerateFacebookEvent event, Emitter<CreateQrState> emit) {
-    emit(CreateQrLoading());
-    try {} catch (e) {
+    emit(const CreateQrLoading());
+    try {
+      String result = createQrRepository.createFacebookQrCode(
+        event.link,
+      );
+      print(result);
+    } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
   }
 
   _onGenerateSmsEvent(GenerateSmsEvent event, Emitter<CreateQrState> emit) {
-    emit(CreateQrLoading());
-    try {} catch (e) {
+    emit(const CreateQrLoading());
+    try {
+      String result = createQrRepository.createSmsQrCode(
+        event.phoneNumber,
+        event.message,
+      );
+      print(result);
+    } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
   }
 
   _onGenerateUrlEvent(GenerateUrlEvent event, Emitter<CreateQrState> emit) {
-    emit(CreateQrLoading());
-    try {} catch (e) {
+    emit(const CreateQrLoading());
+    try {
+      String result = createQrRepository.createUrlQrCode(
+        event.url,
+      );
+      print(result);
+    } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
   }
 
   _onGenerateVCardEvent(GenerateVCardEvent event, Emitter<CreateQrState> emit) {
-    emit(CreateQrLoading());
-    try {} catch (e) {
+    emit(const CreateQrLoading());
+    try {
+      String result = createQrRepository.createVCardQrCode(
+        event.firstName,
+        event.lastName,
+        event.nickname,
+        event.url,
+        event.street,
+        event.city,
+        event.state,
+        event.zipCode,
+        event.country,
+        event.birthDay,
+        event.note,
+      );
+      print(result);
+    } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
   }
 
   _onGenerateWifiEvent(GenerateWifiEvent event, Emitter<CreateQrState> emit) {
-    emit(CreateQrLoading());
-    try {} catch (e) {
+    emit(const CreateQrLoading());
+    try {
+      String result = createQrRepository.createWifiQrCode(
+        event.networkName,
+        event.password,
+        event.security,
+      );
+      print(result);
+    } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
   }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code/bloc/bloc.dart';
+import 'package:qr_code/repositories/repositories.dart';
 import 'package:qr_code/routes/router.dart';
 
 void main() {
@@ -20,18 +21,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ApplicationBloc(),
-      child: ScreenUtilInit(
-        builder: (context, child) {
-          return MaterialApp.router(
-            title: 'Flutter Demo',
-            
-            routeInformationProvider: router.routeInformationProvider,
-            routeInformationParser: router.routeInformationParser,
-            routerDelegate: router.routerDelegate,
-          );
-        },
+    return RepositoryProvider(
+      create: (context) => const CreateQrRepository(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => ApplicationBloc(),
+          ),
+          BlocProvider(
+            create: (context) => CreateQrBloc(
+                createQrRepository:
+                    RepositoryProvider.of<CreateQrRepository>(context)),
+          ),
+        ],
+        child: ScreenUtilInit(
+          builder: (context, child) {
+            return MaterialApp.router(
+              title: 'Flutter Demo',
+              routeInformationProvider: router.routeInformationProvider,
+              routeInformationParser: router.routeInformationParser,
+              routerDelegate: router.routerDelegate,
+            );
+          },
+        ),
       ),
     );
   }

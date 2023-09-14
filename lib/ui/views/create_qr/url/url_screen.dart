@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qr_code/bloc/bloc.dart';
 import 'package:qr_code/resources/resources.dart';
-import 'package:qr_code/ui/widgets/create_qr/create_qr.dart';
+import 'package:qr_code/ui/ui.dart';
 
 class UrlScreen extends StatefulWidget {
   const UrlScreen({super.key});
@@ -11,6 +13,8 @@ class UrlScreen extends StatefulWidget {
 }
 
 class _VCardScreenState extends State<UrlScreen> {
+  final TextEditingController _urlController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -22,11 +26,18 @@ class _VCardScreenState extends State<UrlScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 20.h,),
-                reusableTextFormField("Url"),
-
-                reusableElevatedButton(),
-                SizedBox(height: 80.h,),
+                SizedBox(
+                  height: 20.h,
+                ),
+                reusableTextFormField("Url", _urlController),
+                reusableElevatedButton(() {
+                  context.read<CreateQrBloc>().add(
+                        GenerateUrlEvent(_urlController.text),
+                      );
+                }),
+                SizedBox(
+                  height: 80.h,
+                ),
               ],
             ),
           ),

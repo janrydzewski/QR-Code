@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qr_code/bloc/bloc.dart';
 import 'package:qr_code/resources/resources.dart';
-import 'package:qr_code/ui/widgets/create_qr/create_qr.dart';
+import 'package:qr_code/ui/ui.dart';
 
 class SmsScreen extends StatefulWidget {
   const SmsScreen({super.key});
@@ -11,6 +13,8 @@ class SmsScreen extends StatefulWidget {
 }
 
 class _VCardScreenState extends State<SmsScreen> {
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -25,9 +29,12 @@ class _VCardScreenState extends State<SmsScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                reusableTextFormField("Number"),
-                reusableTextFormField("Message"),
-                reusableElevatedButton(),
+                reusableTextFormField("Number", _phoneNumberController),
+                reusableTextFormField("Message", _messageController),
+                reusableElevatedButton(() {
+                  context.read<CreateQrBloc>().add(GenerateSmsEvent(
+                      _phoneNumberController.text, _messageController.text));
+                }),
                 SizedBox(
                   height: 80.h,
                 ),

@@ -30,13 +30,13 @@ class GenerateFacebookEvent extends CreateQrEvent {
 
 
 class GenerateSmsEvent extends CreateQrEvent {
-  final String number;
+  final String phoneNumber;
   final String message;
 
-  const GenerateSmsEvent(this.number, this.message);
+  const GenerateSmsEvent(this.phoneNumber, this.message);
 
   @override
-  List<Object> get props => [number, message];
+  List<Object> get props => [phoneNumber, message];
 }
 
 
@@ -57,6 +57,7 @@ class GenerateVCardEvent extends CreateQrEvent {
   final String url;
   final String street;
   final String city;
+  final String state;
   final String zipCode;
   final String country;
   final String birthDay;
@@ -69,6 +70,7 @@ class GenerateVCardEvent extends CreateQrEvent {
       this.url,
       this.street,
       this.city,
+      this.state,
       this.zipCode,
       this.country,
       this.birthDay,
@@ -82,11 +84,11 @@ class GenerateVCardEvent extends CreateQrEvent {
 class GenerateWifiEvent extends CreateQrEvent {
   final String networkName;
   final String password;
-  final String company;
+  final String security;
 
-  const GenerateWifiEvent(this.networkName, this.password, this.company);
+  const GenerateWifiEvent(this.networkName, this.password, this.security);
 
   @override
-  List<Object> get props => [networkName, password, company];
+  List<Object> get props => [networkName, password, security];
 }
 

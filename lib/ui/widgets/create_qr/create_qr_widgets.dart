@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qr_code/resources/resources.dart';
 import 'package:qr_code/ui/widgets/common_widgets.dart';
 
-reusableTextFormField(String text) {
+reusableTextFormField(String text, TextEditingController textEditingController) {
   return Container(
     width: 375.w,
     height: 100.h,
@@ -16,6 +16,7 @@ reusableTextFormField(String text) {
           height: 10.h,
         ),
         TextFormField(
+          controller: textEditingController,
           decoration: const InputDecoration(
             fillColor: ColorProvider.mainElement,
             filled: true,
@@ -35,7 +36,7 @@ reusableTextFormField(String text) {
   );
 }
 
-reusableElevatedButton() {
+reusableElevatedButton(Function() func) {
   return Container(
     width: 375.w,
     height: 40.h,
@@ -44,7 +45,7 @@ reusableElevatedButton() {
       style: ElevatedButton.styleFrom(
         backgroundColor: ColorProvider.mainNavBarElementSelected,
       ),
-      onPressed: () {},
+      onPressed: func,
       child: reusableText("Create QR", fontColor: Colors.white),
     ),
   );

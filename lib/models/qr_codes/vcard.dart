@@ -5,6 +5,7 @@ class VCardModel {
   final String url;
   final String street;
   final String city;
+  final String state;
   final String zipCode;
   final String country;
   final String birthDay;
@@ -17,6 +18,7 @@ class VCardModel {
       this.url,
       this.street,
       this.city,
+      this.state,
       this.zipCode,
       this.country,
       this.birthDay,
