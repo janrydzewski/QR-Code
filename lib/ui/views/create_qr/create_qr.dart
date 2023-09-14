@@ -1,5 +1,5 @@
 export 'email/email.dart';
-export 'facebook/facebook.dart';
+export 'event/event.dart';
 export 'sms/sms.dart';
 export 'url/url.dart';
 export 'vcard/vcard.dart';

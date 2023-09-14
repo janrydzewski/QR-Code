@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_code/bloc/bloc.dart';
 import 'package:qr_code/resources/resources.dart';
 import 'package:qr_code/ui/ui.dart';
@@ -23,23 +24,23 @@ class _VCardScreenState extends State<UrlScreen> {
       child: Scaffold(
         backgroundColor: ColorProvider.mainBackground,
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 20.h,
-                ),
-                reusableTextFormField("Url", _urlController),
-                reusableElevatedButton(() {
-                  context.read<CreateQrBloc>().add(
-                        GenerateUrlEvent(_urlController.text),
-                      );
-                }),
-                SizedBox(
-                  height: 80.h,
-                ),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 20.h,
+              ),
+              reusableTextFormField("Url", _urlController),
+              reusableElevatedButton(() {
+                context.read<CreateQrBloc>().add(
+                      GenerateUrlEvent(_urlController.text),
+                    );
+                context.go("/list/showQr");
+              }),
+              SizedBox(
+                height: 80.h,
+              ),
+            ],
           ),
         ),
       ),

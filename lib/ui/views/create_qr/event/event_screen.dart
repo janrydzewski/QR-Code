@@ -6,17 +6,17 @@ import 'package:qr_code/bloc/bloc.dart';
 import 'package:qr_code/resources/resources.dart';
 import 'package:qr_code/ui/ui.dart';
 
-class EmailScreen extends StatefulWidget {
-  const EmailScreen({super.key});
+class EventScreen extends StatefulWidget {
+  const EventScreen({super.key});
 
   @override
-  State<EmailScreen> createState() => _EmailScreenState();
+  State<EventScreen> createState() => _VCardScreenState();
 }
 
-class _EmailScreenState extends State<EmailScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _subjectController = TextEditingController();
-  final TextEditingController _messageController = TextEditingController();
+class _VCardScreenState extends State<EventScreen> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _startDateController = TextEditingController();
+  final TextEditingController _endDateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +32,13 @@ class _EmailScreenState extends State<EmailScreen> {
               SizedBox(
                 height: 20.h,
               ),
-              reusableTextFormField("Email", _emailController),
-              reusableTextFormField("Subject", _subjectController),
-              reusableTextFormField("Message", _messageController),
+              reusableTextFormField("Title", _titleController),
+              reusableTextFormField("Start Date", _startDateController),
+              reusableTextFormField("End Date", _endDateController),
               reusableElevatedButton(() {
-                context.read<CreateQrBloc>().add(GenerateEmailEvent(
-                    _emailController.text,
-                    _subjectController.text,
-                    _messageController.text));
+                context
+                    .read<CreateQrBloc>()
+                    .add(GenerateEventEvent(_titleController.text, _startDateController.text, _endDateController.text));
                 context.go("/list/showQr");
               }),
               SizedBox(

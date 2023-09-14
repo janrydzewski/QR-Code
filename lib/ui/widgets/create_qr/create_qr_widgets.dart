@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_code/resources/resources.dart';
 import 'package:qr_code/ui/widgets/common_widgets.dart';
 
-reusableTextFormField(String text, TextEditingController textEditingController) {
+reusableTextFormField(
+    String text, TextEditingController textEditingController) {
   return Container(
     width: 375.w,
     height: 100.h,
@@ -15,7 +17,9 @@ reusableTextFormField(String text, TextEditingController textEditingController) 
         SizedBox(
           height: 10.h,
         ),
-        TextFormField(
+        TextField(
+          autofocus: false,
+          autocorrect: false,
           controller: textEditingController,
           decoration: const InputDecoration(
             fillColor: ColorProvider.mainElement,
@@ -30,6 +34,8 @@ reusableTextFormField(String text, TextEditingController textEditingController) 
               borderSide: BorderSide(color: ColorProvider.mainElement),
             ),
           ),
+          style: GoogleFonts.notoSans(color: Colors.white),
+          cursorColor: Colors.white,
         ),
       ],
     ),
@@ -46,7 +52,8 @@ reusableElevatedButton(Function() func) {
         backgroundColor: ColorProvider.mainNavBarElementSelected,
       ),
       onPressed: func,
-      child: reusableText("Create QR", fontColor: Colors.white),
+      child: reusableText("Create QR",
+          fontColor: Colors.white, fontWeight: FontWeight.w700),
     ),
   );
 }

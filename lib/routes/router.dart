@@ -72,25 +72,35 @@ class MyRouter {
                 },
               ),
               GoRoute(
-                name: 'Facebook',
-                path: 'facebook',
+                name: 'Event',
+                path: 'event',
                 pageBuilder: (context, state) {
                   return const NoTransitionPage(
-                    child: FacebookScreen(),
+                    child: EventScreen(),
                   );
                 },
               ),
             ],
           ),
           GoRoute(
-            name: 'List',
-            path: '/list',
-            pageBuilder: (context, state) {
-              return const NoTransitionPage(
-                child: Center(child: Text("List")),
-              );
-            },
-          ),
+              name: 'List',
+              path: '/list',
+              pageBuilder: (context, state) {
+                return const NoTransitionPage(
+                  child: Center(child: Text("List")),
+                );
+              },
+              routes: <RouteBase>[
+                GoRoute(
+                  name: 'ShowQr',
+                  path: 'showQr',
+                  pageBuilder: (context, state) {
+                    return const NoTransitionPage(
+                      child: ShowQrScreen(),
+                    );
+                  },
+                ),
+              ]),
         ],
       ),
     ],

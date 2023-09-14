@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_code/bloc/bloc.dart';
 import 'package:qr_code/resources/resources.dart';
 import 'package:qr_code/ui/ui.dart';
@@ -21,8 +22,6 @@ class _VCardScreenState extends State<VCardScreen> {
   final TextEditingController _websiteController = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
-  final TextEditingController _stateController = TextEditingController();
-  final TextEditingController _zipCodeController = TextEditingController();
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
@@ -49,8 +48,6 @@ class _VCardScreenState extends State<VCardScreen> {
                 reusableTextFormField("Website", _websiteController),
                 reusableTextFormField("Street", _streetController),
                 reusableTextFormField("City", _cityController),
-                reusableTextFormField("State", _stateController),
-                reusableTextFormField("ZIP Code", _zipCodeController),
                 reusableTextFormField("Country", _countryController),
                 reusableTextFormField("Birthday", _birthdayController),
                 reusableTextFormField("Note", _noteController),
@@ -63,12 +60,11 @@ class _VCardScreenState extends State<VCardScreen> {
                             _websiteController.text,
                             _streetController.text,
                             _cityController.text,
-                            _stateController.text,
-                            _zipCodeController.text,
                             _countryController.text,
                             _birthdayController.text,
                             _noteController.text),
                       );
+                  context.go("/list/showQr");
                 }),
                 SizedBox(
                   height: 80.h,

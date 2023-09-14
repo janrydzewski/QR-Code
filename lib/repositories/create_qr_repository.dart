@@ -2,11 +2,11 @@ class CreateQrRepository{
   const CreateQrRepository();
 
   String createEmailQrCode(String email, String subject, String message){
-    return "MATMSG:TO:${email};SUB:${subject};BODY:${message};;";
+    return "mailto:${email}?subject=${subject}&body=${message}";
   }
 
-  String createFacebookQrCode(String link){
-    return "https://${link}/";
+  String createEventQrCode(String title, String startDate, String endDate){
+    return "BEGIN:VEVENT\n""SUMMARY:${title}\n""DTSTART:${startDate}\n""DTEND:${endDate}\n""END:VEVENT";
   }
 
   String createSmsQrCode(String phoneNumber, String message){
@@ -14,11 +14,11 @@ class CreateQrRepository{
   }
 
   String createUrlQrCode(String url){
-    return "https://\${url}/";
+    return "https://${url}/";
   }
 
-  String createVCardQrCode(String firstName, String lastName, String nickname, String url, String street, String city, String state, String zipCode, String country, String birthDay, String note){
-    return "MECARD:N:${lastName},${firstName};NICKNAME:${nickname};URL:${url};ADR:,,${street},${city},${state},${zipCode},${country};BDAY:${birthDay};NOTE:${note};;";
+  String createVCardQrCode(String firstName, String lastName, String nickname, String url, String street, String city, String country, String birthDay, String note){
+    return "MECARD:N:${lastName},${firstName};NICKNAME:${nickname};URL:${url};ADR:${street},${city},${country};BDAY:${birthDay};NOTE:${note};;";
   }
 
   String createWifiQrCode(String networkName, String password, String security){

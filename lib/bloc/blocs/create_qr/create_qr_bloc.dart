@@ -10,7 +10,7 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
   CreateQrBloc({required this.createQrRepository})
       : super(const CreateQrState()) {
     on<GenerateEmailEvent>(_onGenerateEmailEvent);
-    on<GenerateFacebookEvent>(_onGenerateFacebookEvent);
+    on<GenerateEventEvent>(_onGenerateEventEvent);
     on<GenerateSmsEvent>(_onGenerateSmsEvent);
     on<GenerateUrlEvent>(_onGenerateUrlEvent);
     on<GenerateVCardEvent>(_onGenerateVCardEvent);
@@ -26,19 +26,24 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
         event.message,
       );
       print(result);
+      emit(CreateQrState(dataCode: result));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
   }
 
-  _onGenerateFacebookEvent(
-      GenerateFacebookEvent event, Emitter<CreateQrState> emit) {
+  _onGenerateEventEvent(
+      GenerateEventEvent event, Emitter<CreateQrState> emit) {
     emit(const CreateQrLoading());
     try {
-      String result = createQrRepository.createFacebookQrCode(
-        event.link,
+      String result = createQrRepository.createEventQrCode(
+        event.title,
+        event.startDate,
+        event.endDate,
       );
       print(result);
+            emit(CreateQrState(dataCode: result));
+
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
@@ -52,6 +57,8 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
         event.message,
       );
       print(result);
+            emit(CreateQrState(dataCode: result));
+
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
@@ -64,6 +71,8 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
         event.url,
       );
       print(result);
+            emit(CreateQrState(dataCode: result));
+
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
@@ -79,13 +88,13 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
         event.url,
         event.street,
         event.city,
-        event.state,
-        event.zipCode,
         event.country,
         event.birthDay,
         event.note,
       );
       print(result);
+            emit(CreateQrState(dataCode: result));
+
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
@@ -100,6 +109,9 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
         event.security,
       );
       print(result);
+            emit(CreateQrState(dataCode: result));
+
+
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }

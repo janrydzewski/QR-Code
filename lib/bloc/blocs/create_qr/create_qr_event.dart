@@ -18,16 +18,16 @@ class GenerateEmailEvent extends CreateQrEvent {
   List<Object> get props => [email, subject, message];
 }
 
-class GenerateFacebookEvent extends CreateQrEvent {
-  
-  final String link;
+class GenerateEventEvent extends CreateQrEvent {
+  final String title;
+  final String startDate;
+  final String endDate;
 
-  const GenerateFacebookEvent(this.link);
+  const GenerateEventEvent(this.title, this.startDate, this.endDate);
 
   @override
-  List<Object> get props => [link];
+  List<Object> get props => [title, startDate, endDate];
 }
-
 
 class GenerateSmsEvent extends CreateQrEvent {
   final String phoneNumber;
@@ -39,7 +39,6 @@ class GenerateSmsEvent extends CreateQrEvent {
   List<Object> get props => [phoneNumber, message];
 }
 
-
 class GenerateUrlEvent extends CreateQrEvent {
   final String url;
 
@@ -49,7 +48,6 @@ class GenerateUrlEvent extends CreateQrEvent {
   List<Object> get props => [url];
 }
 
-
 class GenerateVCardEvent extends CreateQrEvent {
   final String firstName;
   final String lastName;
@@ -57,29 +55,26 @@ class GenerateVCardEvent extends CreateQrEvent {
   final String url;
   final String street;
   final String city;
-  final String state;
-  final String zipCode;
   final String country;
   final String birthDay;
   final String note;
 
-  const GenerateVCardEvent(
-      this.firstName,
-      this.lastName,
-      this.nickname,
-      this.url,
-      this.street,
-      this.city,
-      this.state,
-      this.zipCode,
-      this.country,
-      this.birthDay,
-      this.note);
+  const GenerateVCardEvent(this.firstName, this.lastName, this.nickname,
+      this.url, this.street, this.city, this.country, this.birthDay, this.note);
 
   @override
-  List<Object> get props => [firstName, lastName, nickname, url, street, city, zipCode, country, birthDay, note];
+  List<Object> get props => [
+        firstName,
+        lastName,
+        nickname,
+        url,
+        street,
+        city,
+        country,
+        birthDay,
+        note
+      ];
 }
-
 
 class GenerateWifiEvent extends CreateQrEvent {
   final String networkName;
@@ -91,4 +86,3 @@ class GenerateWifiEvent extends CreateQrEvent {
   @override
   List<Object> get props => [networkName, password, security];
 }
-

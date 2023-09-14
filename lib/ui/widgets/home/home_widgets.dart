@@ -59,6 +59,6 @@ List<Widget> homeMainElements(BuildContext context) {
     homeMainElementWidget(
         "Email", Icons.email, const Color(0xFF329bef), context),
     homeMainElementWidget(
-        "Facebook", Icons.facebook, const Color(0xFFf48842), context),
+        "Event", Icons.calendar_month, const Color(0xFFf48842), context),
   ];
 }
