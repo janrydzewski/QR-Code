@@ -11,6 +11,7 @@ void main() async {
   MyRouter myRouter = MyRouter();
 
   await Hive.initFlutter();
+  await Hive.openBox("all");
   await Hive.openBox("email");
   await Hive.openBox("event");
   await Hive.openBox("sms");
@@ -41,6 +42,9 @@ class MyApp extends StatelessWidget {
             create: (context) => CreateQrBloc(
                 createQrRepository:
                     RepositoryProvider.of<CreateQrRepository>(context)),
+          ),
+          BlocProvider(
+            create: (context) => ListBloc(),
           ),
         ],
         child: ScreenUtilInit(

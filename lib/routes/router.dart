@@ -87,7 +87,7 @@ class MyRouter {
               path: '/list',
               pageBuilder: (context, state) {
                 return const NoTransitionPage(
-                  child: Center(child: Text("List")),
+                  child: ListScreen(),
                 );
               },
               routes: <RouteBase>[

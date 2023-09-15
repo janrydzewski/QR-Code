@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qr_code/repositories/repositories.dart';
 
 part 'create_qr_event.dart';
@@ -26,14 +27,15 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
         event.message,
       );
       print(result);
+      Hive.box("all").add(result);
+      Hive.box("email").add(result);
       emit(CreateQrState(dataCode: result));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
   }
 
-  _onGenerateEventEvent(
-      GenerateEventEvent event, Emitter<CreateQrState> emit) {
+  _onGenerateEventEvent(GenerateEventEvent event, Emitter<CreateQrState> emit) {
     emit(const CreateQrLoading());
     try {
       String result = createQrRepository.createEventQrCode(
@@ -41,9 +43,10 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
         event.startDate,
         event.endDate,
       );
+      Hive.box("all").add(result);
+      Hive.box("event").add(result);
       print(result);
-            emit(CreateQrState(dataCode: result));
-
+      emit(CreateQrState(dataCode: result));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
@@ -57,8 +60,8 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
         event.message,
       );
       print(result);
-            emit(CreateQrState(dataCode: result));
-
+      Hive.box("sms").add(result);
+      emit(CreateQrState(dataCode: result));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
@@ -71,8 +74,9 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
         event.url,
       );
       print(result);
-            emit(CreateQrState(dataCode: result));
-
+      Hive.box("all").add(result);
+      Hive.box("url").add(result);
+      emit(CreateQrState(dataCode: result));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
@@ -93,8 +97,9 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
         event.note,
       );
       print(result);
-            emit(CreateQrState(dataCode: result));
-
+      Hive.box("all").add(result);
+      Hive.box("vcard").add(result);
+      emit(CreateQrState(dataCode: result));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
@@ -109,9 +114,9 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
         event.security,
       );
       print(result);
-            emit(CreateQrState(dataCode: result));
-
-
+      Hive.box("all").add(result);
+      Hive.box("wifi").add(result);
+      emit(CreateQrState(dataCode: result));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
