@@ -37,7 +37,6 @@ void main() async {
   await Hive.openBox("vcard");
   await Hive.openBox("wifi");
 
-  print(Hive.box("email").length);
   // Hive.box("all").clear();
   // Hive.box("email").clear();
   // Hive.box("event").clear();
@@ -87,7 +86,7 @@ class MyApp extends StatelessWidget {
         child: ScreenUtilInit(
           builder: (context, child) {
             return MaterialApp.router(
-              title: 'Flutter Demo',
+              title: 'QR Code App',
               routeInformationProvider: router.routeInformationProvider,
               routeInformationParser: router.routeInformationParser,
               routerDelegate: router.routerDelegate,
