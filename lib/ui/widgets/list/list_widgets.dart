@@ -96,8 +96,120 @@ Widget qrCardWidget(Widget child1, Widget child2, {double height = 150}) {
 }
 
 Widget listWidget(ListState state) {
+  if (state is ListCombinedState) {
+    return SizedBox(
+      width: 375.w,
+      height: 500.w,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: state.emailList.length,
+              itemBuilder: (context, index) {
+                final element = state.emailList[index].emailModel;
+                return qrCardWidget(
+                  qrCodeWidget(state.emailList[index].data),
+                  threeElementExpandedColumn("Email", element.email, "Subject",
+                      element.subject, "Message", element.message),
+                );
+              },
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: state.eventList.length,
+              itemBuilder: (context, index) {
+                final element = state.eventList[index].eventModel;
+                return qrCardWidget(
+                  qrCodeWidget(state.eventList[index].data),
+                  threeElementExpandedColumn("Title", element.title, "Start at",
+                      element.startDate, "End at", element.endDate),
+                );
+              },
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: state.smsList.length,
+              itemBuilder: (context, index) {
+                final element = state.smsList[index].smsModel;
+                return qrCardWidget(
+                  qrCodeWidget(state.smsList[index].data),
+                  twoElementExpandedColumn("Phone number", element.number,
+                      "Message", element.message),
+                );
+              },
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: state.urlList.length,
+              itemBuilder: (context, index) {
+                final element = state.urlList[index].urlModel;
+                return qrCardWidget(
+                  qrCodeWidget(state.urlList[index].data),
+                  oneElementExpandedColumn("Url", element.url),
+                );
+              },
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: state.vcardList.length,
+              itemBuilder: (context, index) {
+                final element = state.vcardList[index].vCardModel;
+                return qrCardWidget(
+                    qrCodeWidget(state.vcardList[index].data),
+                    nineElementExpandedColumn(
+                      "First Name",
+                      element.firstName,
+                      "Last Name",
+                      element.lastName,
+                      "Nickname",
+                      element.nickname,
+                      "Url",
+                      element.url,
+                      "Street",
+                      element.street,
+                      "City",
+                      element.city,
+                      "Country",
+                      element.country,
+                      "Birthday",
+                      element.birthDay,
+                      "Note",
+                      element.note,
+                    ),
+                    height: 350);
+              },
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: state.wifiList.length,
+              itemBuilder: (context, index) {
+                final element = state.wifiList[index].wifiModel;
+                return qrCardWidget(
+                  qrCodeWidget(state.wifiList[index].data),
+                  threeElementExpandedColumn(
+                      "SSID",
+                      element.networkName,
+                      "Password",
+                      element.password,
+                      "Security",
+                      element.security),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
   if (state is ListEmailState) {
-    return Container(
+    return SizedBox(
       width: 375.w,
       height: 500.w,
       child: ListView.builder(
@@ -114,7 +226,7 @@ Widget listWidget(ListState state) {
     );
   }
   if (state is ListEventState) {
-    return Container(
+    return SizedBox(
       width: 375.w,
       height: 500.w,
       child: ListView.builder(
@@ -131,7 +243,7 @@ Widget listWidget(ListState state) {
     );
   }
   if (state is ListSmsState) {
-    return Container(
+    return SizedBox(
       width: 375.w,
       height: 500.w,
       child: ListView.builder(
@@ -148,7 +260,7 @@ Widget listWidget(ListState state) {
     );
   }
   if (state is ListUrlState) {
-    return Container(
+    return SizedBox(
       width: 375.w,
       height: 500.w,
       child: ListView.builder(
@@ -164,7 +276,7 @@ Widget listWidget(ListState state) {
     );
   }
   if (state is ListVCardState) {
-    return Container(
+    return SizedBox(
       width: 375.w,
       height: 500.w,
       child: ListView.builder(
@@ -172,35 +284,34 @@ Widget listWidget(ListState state) {
         itemBuilder: (context, index) {
           final element = state.qrList[index].vCardModel;
           return qrCardWidget(
-            qrCodeWidget(state.qrList[index].data),
-            nineElementExpandedColumn(
-              "First Name",
-              element.firstName,
-              "Last Name",
-              element.lastName,
-              "Nickname",
-              element.nickname,
-              "Url",
-              element.url,
-              "Street",
-              element.street,
-              "City",
-              element.city,
-              "Country",
-              element.country,
-              "Birthday",
-              element.birthDay,
-              "Note",
-              element.note,
-            ),
-            height: 350
-          );
+              qrCodeWidget(state.qrList[index].data),
+              nineElementExpandedColumn(
+                "First Name",
+                element.firstName,
+                "Last Name",
+                element.lastName,
+                "Nickname",
+                element.nickname,
+                "Url",
+                element.url,
+                "Street",
+                element.street,
+                "City",
+                element.city,
+                "Country",
+                element.country,
+                "Birthday",
+                element.birthDay,
+                "Note",
+                element.note,
+              ),
+              height: 350);
         },
       ),
     );
   }
   if (state is ListWifiState) {
-    return Container(
+    return SizedBox(
       width: 375.w,
       height: 500.w,
       child: ListView.builder(
@@ -242,7 +353,9 @@ elementOfExpandedColumn(String text1, String text2) {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       titleElementOfExpandedColumn(text1),
-      SizedBox(height: 2.h,),
+      SizedBox(
+        height: 2.h,
+      ),
       bodyElementOfExpandedColumn(text2),
     ],
   );
