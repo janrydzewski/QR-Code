@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qr_code/bloc/bloc.dart';
+import 'package:qr_code/models/models.dart';
 import 'package:qr_code/resources/colors/colors.dart';
 import 'package:qr_code/ui/ui.dart';
 
@@ -21,12 +22,17 @@ class _ListScreenState extends State<ListScreen> {
       child: Scaffold(
         backgroundColor: ColorProvider.mainBackground,
         body: SafeArea(
-          child: Column(
-            children: [
-              topBarWidget(),
-              Expanded(child: ListView.builder(itemBuilder: (context, index){}))
-            ],
-          )
+          child: BlocBuilder<ListBloc, ListState>(
+            builder: (context, state) {
+              return Column(
+                children: [
+                  topBarWidget(state),
+                  listWidget(state),
+                  
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

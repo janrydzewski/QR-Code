@@ -8,10 +8,12 @@ reusableText(String text,
     Color fontColor = ColorProvider.mainNavBar,
     FontWeight fontWeight = FontWeight.w500,
     double letterSpacing = 0,
-    TextAlign textAlign = TextAlign.start}) {
+    TextAlign textAlign = TextAlign.start, int maxLines = 1}) {
   return Text(
     text,
     textAlign: textAlign,
+    maxLines: maxLines,
+    overflow: TextOverflow.ellipsis,
     style: GoogleFonts.notoSans(
         fontSize: fontSize.sp,
         color: fontColor,

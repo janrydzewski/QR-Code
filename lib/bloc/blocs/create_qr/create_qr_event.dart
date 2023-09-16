@@ -8,81 +8,57 @@ class CreateQrEvent extends Equatable {
 }
 
 class GenerateEmailEvent extends CreateQrEvent {
-  final String email;
-  final String subject;
-  final String message;
+  final EmailModel emailModel;
 
-  const GenerateEmailEvent(this.email, this.subject, this.message);
+  const GenerateEmailEvent(this.emailModel);
 
   @override
-  List<Object> get props => [email, subject, message];
+  List<Object> get props => [emailModel];
 }
 
 class GenerateEventEvent extends CreateQrEvent {
-  final String title;
-  final String startDate;
-  final String endDate;
+  final EventModel eventModel;
 
-  const GenerateEventEvent(this.title, this.startDate, this.endDate);
+  const GenerateEventEvent(this.eventModel);
 
   @override
-  List<Object> get props => [title, startDate, endDate];
+  List<Object> get props => [eventModel];
 }
 
 class GenerateSmsEvent extends CreateQrEvent {
-  final String phoneNumber;
-  final String message;
+  final SmsModel smsModel;
 
-  const GenerateSmsEvent(this.phoneNumber, this.message);
+  const GenerateSmsEvent(this.smsModel);
 
   @override
-  List<Object> get props => [phoneNumber, message];
+  List<Object> get props => [smsModel];
 }
 
 class GenerateUrlEvent extends CreateQrEvent {
-  final String url;
+  final UrlModel urlModel;
 
-  const GenerateUrlEvent(this.url);
+  const GenerateUrlEvent(this.urlModel);
 
   @override
-  List<Object> get props => [url];
+  List<Object> get props => [urlModel];
 }
 
 class GenerateVCardEvent extends CreateQrEvent {
-  final String firstName;
-  final String lastName;
-  final String nickname;
-  final String url;
-  final String street;
-  final String city;
-  final String country;
-  final String birthDay;
-  final String note;
+  final VCardModel vCardModel;
 
-  const GenerateVCardEvent(this.firstName, this.lastName, this.nickname,
-      this.url, this.street, this.city, this.country, this.birthDay, this.note);
+  const GenerateVCardEvent(this.vCardModel);
 
   @override
   List<Object> get props => [
-        firstName,
-        lastName,
-        nickname,
-        url,
-        street,
-        city,
-        country,
-        birthDay,
-        note
+        vCardModel
       ];
 }
 
 class GenerateWifiEvent extends CreateQrEvent {
-  final String networkName;
-  final String password;
-  final String security;
+  final WifiModel wifiModel;
 
-  const GenerateWifiEvent(this.networkName, this.password, this.security);
+  const GenerateWifiEvent(this.wifiModel);
 
   @override
-  List<Object> get props => [networkName, password, security];
+  List<Object> get props => [wifiModel];
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code/bloc/bloc.dart';
+import 'package:qr_code/models/models.dart';
 import 'package:qr_code/resources/resources.dart';
 import 'package:qr_code/ui/ui.dart';
 
@@ -36,10 +37,12 @@ class _EmailScreenState extends State<EmailScreen> {
               reusableTextFormField("Subject", _subjectController),
               reusableTextFormField("Message", _messageController),
               reusableElevatedButton(() {
-                context.read<CreateQrBloc>().add(GenerateEmailEvent(
-                    _emailController.text,
-                    _subjectController.text,
-                    _messageController.text));
+                context.read<CreateQrBloc>().add(
+                      GenerateEmailEvent(
+                        EmailModel(_emailController.text,
+                            _subjectController.text, _messageController.text),
+                      ),
+                    );
                 context.go("/list/showQr");
               }),
               SizedBox(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_code/bloc/bloc.dart';
+import 'package:qr_code/models/models.dart';
 import 'package:qr_code/resources/resources.dart';
 import 'package:qr_code/ui/ui.dart';
 
@@ -54,6 +55,7 @@ class _VCardScreenState extends State<VCardScreen> {
                 reusableElevatedButton(() {
                   context.read<CreateQrBloc>().add(
                         GenerateVCardEvent(
+                          VCardModel(
                             _firstNameController.text,
                             _lastNameController.text,
                             _nickNameController.text,
@@ -62,7 +64,9 @@ class _VCardScreenState extends State<VCardScreen> {
                             _cityController.text,
                             _countryController.text,
                             _birthdayController.text,
-                            _noteController.text),
+                            _noteController.text,
+                          ),
+                        ),
                       );
                   context.go("/list/showQr");
                 }),

@@ -1,27 +1,29 @@
+import 'package:qr_code/models/models.dart';
+
 class CreateQrRepository{
   const CreateQrRepository();
 
-  String createEmailQrCode(String email, String subject, String message){
-    return "mailto:${email}?subject=${subject}&body=${message}";
+  String createEmailQrCode(EmailModel emailModel){
+    return "mailto:${emailModel.email}?subject=${emailModel.subject}&body=${emailModel.message}";
   }
 
-  String createEventQrCode(String title, String startDate, String endDate){
-    return "BEGIN:VEVENT\n""SUMMARY:${title}\n""DTSTART:${startDate}\n""DTEND:${endDate}\n""END:VEVENT";
+  String createEventQrCode(EventModel eventModel){
+    return "BEGIN:VEVENT\n""SUMMARY:${eventModel.title}\n""DTSTART:${eventModel.startDate}\n""DTEND:${eventModel.endDate}\n""END:VEVENT";
   }
 
-  String createSmsQrCode(String phoneNumber, String message){
-    return "SMSTO:${phoneNumber}:${message}";
+  String createSmsQrCode(SmsModel smsModel){
+    return "SMSTO:${smsModel.number}:${smsModel.message}";
   }
 
-  String createUrlQrCode(String url){
-    return "https://${url}/";
+  String createUrlQrCode(UrlModel urlModel){
+    return "https://${urlModel.url}/";
   }
 
-  String createVCardQrCode(String firstName, String lastName, String nickname, String url, String street, String city, String country, String birthDay, String note){
-    return "MECARD:N:${lastName},${firstName};NICKNAME:${nickname};URL:${url};ADR:${street},${city},${country};BDAY:${birthDay};NOTE:${note};;";
+  String createVCardQrCode(VCardModel vCardModel){
+    return "MECARD:N:${vCardModel.lastName},${vCardModel.firstName};NICKNAME:${vCardModel.nickname};URL:${vCardModel.url};ADR:${vCardModel.street},${vCardModel.city},${vCardModel.country};BDAY:${vCardModel.birthDay};NOTE:${vCardModel.note};;";
   }
 
-  String createWifiQrCode(String networkName, String password, String security){
-    return "WIFI:S:${networkName};T:${security};P:${password};;";
+  String createWifiQrCode(WifiModel wifiModel){
+    return "WIFI:S:${wifiModel.networkName};T:${wifiModel.security};P:${wifiModel.password};;";
   }
 }
