@@ -3,9 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_code/resources/resources.dart';
 import 'package:qr_code/ui/widgets/common_widgets.dart';
+import 'package:flutter/cupertino.dart';
 
-reusableTextFormField(
-    String text, TextEditingController textEditingController) {
+reusableTextFormField(String text, TextEditingController textEditingController,
+    {String type = "string", Widget? child}) {
   return Container(
     width: 375.w,
     height: 100.h,
@@ -20,8 +21,13 @@ reusableTextFormField(
         TextField(
           autofocus: false,
           autocorrect: false,
+          keyboardType:
+              type == "number" ? TextInputType.number : TextInputType.text,
           controller: textEditingController,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
+            suffixIcon: type == "date"
+                ? child
+                : Container(),
             fillColor: ColorProvider.mainElement,
             filled: true,
             enabledBorder: OutlineInputBorder(

@@ -6,6 +6,7 @@ import 'package:qr_code/bloc/bloc.dart';
 import 'package:qr_code/models/models.dart';
 import 'package:qr_code/resources/resources.dart';
 import 'package:qr_code/ui/ui.dart';
+import 'package:flutter/cupertino.dart';
 
 class EventScreen extends StatefulWidget {
   const EventScreen({super.key});
@@ -34,8 +35,56 @@ class _VCardScreenState extends State<EventScreen> {
                 height: 20.h,
               ),
               reusableTextFormField("Title", _titleController),
-              reusableTextFormField("Start Date", _startDateController),
-              reusableTextFormField("End Date", _endDateController),
+              reusableTextFormField(
+                "Start Date",
+                _startDateController,
+                type: "date",
+                child: IconButton(
+                  onPressed: () {
+                    showCupertinoModalPopup(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CupertinoTheme(
+                            data: const CupertinoThemeData(
+                              brightness: Brightness.dark,
+                            ),
+                            child: CupertinoDatePicker(
+                              mode: CupertinoDatePickerMode.dateAndTime,
+                              onDateTimeChanged: (DateTime newDate) {
+                                _startDateController.text = "${newDate.year}/${newDate.month}/${newDate.day} ${newDate.hour}:${newDate.minute}";
+                              },
+                            ),
+                          );
+                        });
+                  },
+                  icon: Icon(Icons.date_range_outlined),
+                ),
+              ),
+              reusableTextFormField(
+                "End Date",
+                _endDateController,
+                type: "date",
+                child: IconButton(
+                  onPressed: () {
+                    showCupertinoModalPopup(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CupertinoTheme(
+                            data: const CupertinoThemeData(
+                              brightness: Brightness.dark,
+                            ),
+                            child: CupertinoDatePicker(
+                              mode: CupertinoDatePickerMode.dateAndTime,
+                              onDateTimeChanged: (DateTime newDate) {
+                                _endDateController.text = "${newDate.year}/${newDate.month}/${newDate.day} ${newDate.hour}:${newDate.minute}";
+                              },
+                            ),
+                          );
+                        });
+                  },
+                  icon: Icon(Icons.date_range_outlined),
+                ),
+              ),
               reusableElevatedButton(() {
                 context.read<CreateQrBloc>().add(
                       GenerateEventEvent(

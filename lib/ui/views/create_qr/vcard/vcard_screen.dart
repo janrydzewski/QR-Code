@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,14 +44,45 @@ class _VCardScreenState extends State<VCardScreen> {
                 ),
                 reusableTextFormField("First Name", _firstNameController),
                 reusableTextFormField("Last Name", _lastNameController),
-                reusableTextFormField("Phone Number", _phoneNumberController),
+                reusableTextFormField("Phone Number", _phoneNumberController,
+                    type: "number"),
                 reusableTextFormField("Nickname", _nickNameController),
-                reusableTextFormField("Email", _emailController),
-                reusableTextFormField("Website", _websiteController),
+                reusableTextFormField(
+                  "Email",
+                  _emailController,
+                ),
+                reusableTextFormField(
+                  "Website",
+                  _websiteController,
+                ),
                 reusableTextFormField("Street", _streetController),
                 reusableTextFormField("City", _cityController),
                 reusableTextFormField("Country", _countryController),
-                reusableTextFormField("Birthday", _birthdayController),
+                reusableTextFormField(
+                  "Birthday",
+                  _birthdayController,
+                  type: "date",
+                  child: IconButton(
+                    onPressed: () {
+                      showCupertinoModalPopup(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CupertinoTheme(
+                              data: const CupertinoThemeData(
+                                brightness: Brightness.dark,
+                              ),
+                              child: CupertinoDatePicker(
+                                mode: CupertinoDatePickerMode.date,
+                                onDateTimeChanged: (DateTime newDate) {
+                                _birthdayController.text = "${newDate.year}/${newDate.month}/${newDate.day}";
+                                },
+                              ),
+                            );
+                          });
+                    },
+                    icon: Icon(Icons.date_range_outlined),
+                  ),
+                ),
                 reusableTextFormField("Note", _noteController),
                 reusableElevatedButton(() {
                   context.read<CreateQrBloc>().add(

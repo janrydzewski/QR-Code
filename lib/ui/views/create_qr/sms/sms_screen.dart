@@ -31,7 +31,7 @@ class _VCardScreenState extends State<SmsScreen> {
               SizedBox(
                 height: 20.h,
               ),
-              reusableTextFormField("Number", _phoneNumberController),
+              reusableTextFormField("Number", _phoneNumberController, type: "number"),
               reusableTextFormField("Message", _messageController),
               reusableElevatedButton(() {
                 context.read<CreateQrBloc>().add(
