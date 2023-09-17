@@ -77,19 +77,46 @@ Widget qrCodeWidget(String data) {
   );
 }
 
-Widget qrCardWidget(Widget child1, Widget child2, {double height = 150}) {
+Widget qrCardWidget(Widget child1, Widget child2, String data, String type,
+    BuildContext context,
+    {double height = 140}) {
   return Container(
     width: 375.w,
     height: height.h,
+    alignment: Alignment.center,
     decoration: BoxDecoration(
         color: ColorProvider.mainElement,
         borderRadius: BorderRadius.circular(15)),
     margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
     padding: const EdgeInsets.symmetric(horizontal: 12),
-    child: Row(
+    child: Stack(
       children: [
-        child1,
-        child2,
+        Row(
+          children: [
+            child1,
+            child2,
+          ],
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: GestureDetector(
+            onTap: () {
+              print("delte");
+              context
+                  .read<ListBloc>()
+                  .add(DeleteElementFromListEvent(data, type));
+              context
+                  .read<ListBloc>()
+                  .add(ChangeIndexEvent(context.read<ListBloc>().state.index));
+            },
+            child: Icon(
+              Icons.delete_outline,
+              color: Colors.white,
+              size: 25.w,
+            ),
+          ),
+        ),
       ],
     ),
   );
@@ -100,68 +127,262 @@ Widget listWidget(ListState state) {
     return SizedBox(
       width: 375.w,
       height: 500.w,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: state.emailList.length,
+      child: state.emailList.isNotEmpty ||
+              state.eventList.isNotEmpty ||
+              state.smsList.isNotEmpty ||
+              state.urlList.isNotEmpty ||
+              state.vcardList.isNotEmpty ||
+              state.wifiList.isNotEmpty
+          ? SingleChildScrollView(
+              child: Column(
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.emailList.length,
+                    itemBuilder: (context, index) {
+                      final element = state.emailList[index].emailModel;
+                      return qrCardWidget(
+                        qrCodeWidget(state.emailList[index].data),
+                        threeElementExpandedColumn(
+                            "Email",
+                            element.email,
+                            "Subject",
+                            element.subject,
+                            "Message",
+                            element.message),
+                        state.emailList[index].data,
+                        "email",
+                        context,
+                      );
+                    },
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.eventList.length,
+                    itemBuilder: (context, index) {
+                      final element = state.eventList[index].eventModel;
+                      return qrCardWidget(
+                        qrCodeWidget(state.eventList[index].data),
+                        threeElementExpandedColumn(
+                            "Title",
+                            element.title,
+                            "Start at",
+                            element.startDate,
+                            "End at",
+                            element.endDate),
+                        state.eventList[index].data,
+                        "event",
+                        context,
+                      );
+                    },
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.smsList.length,
+                    itemBuilder: (context, index) {
+                      final element = state.smsList[index].smsModel;
+                      return qrCardWidget(
+                        qrCodeWidget(state.smsList[index].data),
+                        twoElementExpandedColumn("Phone number", element.number,
+                            "Message", element.message),
+                        state.smsList[index].data,
+                        "sms",
+                        context,
+                      );
+                    },
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.urlList.length,
+                    itemBuilder: (context, index) {
+                      final element = state.urlList[index].urlModel;
+                      return qrCardWidget(
+                        qrCodeWidget(state.urlList[index].data),
+                        oneElementExpandedColumn("Url", element.url),
+                        state.urlList[index].data,
+                        "url",
+                        context,
+                      );
+                    },
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.vcardList.length,
+                    itemBuilder: (context, index) {
+                      final element = state.vcardList[index].vCardModel;
+                      return qrCardWidget(
+                          qrCodeWidget(state.vcardList[index].data),
+                          nineElementExpandedColumn(
+                            "First Name",
+                            element.firstName,
+                            "Last Name",
+                            element.lastName,
+                            "Nickname",
+                            element.nickname,
+                            "Url",
+                            element.url,
+                            "Street",
+                            element.street,
+                            "City",
+                            element.city,
+                            "Country",
+                            element.country,
+                            "Birthday",
+                            element.birthDay,
+                            "Note",
+                            element.note,
+                          ),
+                          state.vcardList[index].data,
+                          "vcard",
+                          context,
+                          height: 350);
+                    },
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.wifiList.length,
+                    itemBuilder: (context, index) {
+                      final element = state.wifiList[index].wifiModel;
+                      return qrCardWidget(
+                        qrCodeWidget(state.wifiList[index].data),
+                        threeElementExpandedColumn(
+                            "SSID",
+                            element.networkName,
+                            "Password",
+                            element.password,
+                            "Security",
+                            element.security),
+                        state.wifiList[index].data,
+                        "wifi",
+                        context,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            )
+          : Center(
+              child: reusableText("You haven't created any qr code yet.",
+                  fontColor: Colors.white),
+            ),
+    );
+  }
+  if (state is ListEmailState) {
+    return SizedBox(
+      width: 375.w,
+      height: 500.w,
+      child: state.qrList.isNotEmpty
+          ? ListView.builder(
+              itemCount: state.qrList.length,
               itemBuilder: (context, index) {
-                final element = state.emailList[index].emailModel;
+                final element = state.qrList[index].emailModel;
                 return qrCardWidget(
-                  qrCodeWidget(state.emailList[index].data),
+                  qrCodeWidget(state.qrList[index].data),
                   threeElementExpandedColumn("Email", element.email, "Subject",
                       element.subject, "Message", element.message),
+                  state.qrList[index].data,
+                  "email",
+                  context,
                 );
               },
+            )
+          : Center(
+              child: reusableText("You haven't created any qr code yet.",
+                  fontColor: Colors.white),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: state.eventList.length,
+    );
+  }
+  if (state is ListEventState) {
+    return SizedBox(
+      width: 375.w,
+      height: 500.w,
+      child: state.qrList.isNotEmpty
+          ? ListView.builder(
+              itemCount: state.qrList.length,
               itemBuilder: (context, index) {
-                final element = state.eventList[index].eventModel;
+                final element = state.qrList[index].eventModel;
                 return qrCardWidget(
-                  qrCodeWidget(state.eventList[index].data),
+                  qrCodeWidget(state.qrList[index].data),
                   threeElementExpandedColumn("Title", element.title, "Start at",
                       element.startDate, "End at", element.endDate),
+                  state.qrList[index].data,
+                  "event",
+                  context,
                 );
               },
+            )
+          : Center(
+              child: reusableText("You haven't created any qr code yet.",
+                  fontColor: Colors.white),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: state.smsList.length,
+    );
+  }
+  if (state is ListSmsState) {
+    return SizedBox(
+      width: 375.w,
+      height: 500.w,
+      child: state.qrList.isNotEmpty
+          ? ListView.builder(
+              itemCount: state.qrList.length,
               itemBuilder: (context, index) {
-                final element = state.smsList[index].smsModel;
+                final element = state.qrList[index].smsModel;
                 return qrCardWidget(
-                  qrCodeWidget(state.smsList[index].data),
+                  qrCodeWidget(state.qrList[index].data),
                   twoElementExpandedColumn("Phone number", element.number,
                       "Message", element.message),
+                  state.qrList[index].data,
+                  "sms",
+                  context,
                 );
               },
+            )
+          : Center(
+              child: reusableText("You haven't created any qr code yet.",
+                  fontColor: Colors.white),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: state.urlList.length,
+    );
+  }
+  if (state is ListUrlState) {
+    return SizedBox(
+      width: 375.w,
+      height: 500.w,
+      child: state.qrList.isNotEmpty
+          ? ListView.builder(
+              itemCount: state.qrList.length,
               itemBuilder: (context, index) {
-                final element = state.urlList[index].urlModel;
+                final element = state.qrList[index].urlModel;
                 return qrCardWidget(
-                  qrCodeWidget(state.urlList[index].data),
+                  qrCodeWidget(state.qrList[index].data),
                   oneElementExpandedColumn("Url", element.url),
+                  state.qrList[index].data,
+                  "url",
+                  context,
                 );
               },
+            )
+          : Center(
+              child: reusableText("You haven't created any qr code yet.",
+                  fontColor: Colors.white),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: state.vcardList.length,
+    );
+  }
+  if (state is ListVCardState) {
+    return SizedBox(
+      width: 375.w,
+      height: 500.w,
+      child: state.qrList.isNotEmpty
+          ? ListView.builder(
+              itemCount: state.qrList.length,
               itemBuilder: (context, index) {
-                final element = state.vcardList[index].vCardModel;
+                final element = state.qrList[index].vCardModel;
                 return qrCardWidget(
-                    qrCodeWidget(state.vcardList[index].data),
+                    qrCodeWidget(state.qrList[index].data),
                     nineElementExpandedColumn(
                       "First Name",
                       element.firstName,
@@ -182,17 +403,29 @@ Widget listWidget(ListState state) {
                       "Note",
                       element.note,
                     ),
+                    state.qrList[index].data,
+                    "vcard",
+                    context,
                     height: 350);
               },
+            )
+          : Center(
+              child: reusableText("You haven't created any qr code yet.",
+                  fontColor: Colors.white),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: state.wifiList.length,
+    );
+  }
+  if (state is ListWifiState) {
+    return SizedBox(
+      width: 375.w,
+      height: 500.w,
+      child: state.qrList.isNotEmpty
+          ? ListView.builder(
+              itemCount: state.qrList.length,
               itemBuilder: (context, index) {
-                final element = state.wifiList[index].wifiModel;
+                final element = state.qrList[index].wifiModel;
                 return qrCardWidget(
-                  qrCodeWidget(state.wifiList[index].data),
+                  qrCodeWidget(state.qrList[index].data),
                   threeElementExpandedColumn(
                       "SSID",
                       element.networkName,
@@ -200,131 +433,16 @@ Widget listWidget(ListState state) {
                       element.password,
                       "Security",
                       element.security),
+                  state.qrList[index].data,
+                  "wifi",
+                  context,
                 );
               },
+            )
+          : Center(
+              child: reusableText("You haven't created any qr code yet.",
+                  fontColor: Colors.white),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-  if (state is ListEmailState) {
-    return SizedBox(
-      width: 375.w,
-      height: 500.w,
-      child: ListView.builder(
-        itemCount: state.qrList.length,
-        itemBuilder: (context, index) {
-          final element = state.qrList[index].emailModel;
-          return qrCardWidget(
-            qrCodeWidget(state.qrList[index].data),
-            threeElementExpandedColumn("Email", element.email, "Subject",
-                element.subject, "Message", element.message),
-          );
-        },
-      ),
-    );
-  }
-  if (state is ListEventState) {
-    return SizedBox(
-      width: 375.w,
-      height: 500.w,
-      child: ListView.builder(
-        itemCount: state.qrList.length,
-        itemBuilder: (context, index) {
-          final element = state.qrList[index].eventModel;
-          return qrCardWidget(
-            qrCodeWidget(state.qrList[index].data),
-            threeElementExpandedColumn("Title", element.title, "Start at",
-                element.startDate, "End at", element.endDate),
-          );
-        },
-      ),
-    );
-  }
-  if (state is ListSmsState) {
-    return SizedBox(
-      width: 375.w,
-      height: 500.w,
-      child: ListView.builder(
-        itemCount: state.qrList.length,
-        itemBuilder: (context, index) {
-          final element = state.qrList[index].smsModel;
-          return qrCardWidget(
-            qrCodeWidget(state.qrList[index].data),
-            twoElementExpandedColumn(
-                "Phone number", element.number, "Message", element.message),
-          );
-        },
-      ),
-    );
-  }
-  if (state is ListUrlState) {
-    return SizedBox(
-      width: 375.w,
-      height: 500.w,
-      child: ListView.builder(
-        itemCount: state.qrList.length,
-        itemBuilder: (context, index) {
-          final element = state.qrList[index].urlModel;
-          return qrCardWidget(
-            qrCodeWidget(state.qrList[index].data),
-            oneElementExpandedColumn("Url", element.url),
-          );
-        },
-      ),
-    );
-  }
-  if (state is ListVCardState) {
-    return SizedBox(
-      width: 375.w,
-      height: 500.w,
-      child: ListView.builder(
-        itemCount: state.qrList.length,
-        itemBuilder: (context, index) {
-          final element = state.qrList[index].vCardModel;
-          return qrCardWidget(
-              qrCodeWidget(state.qrList[index].data),
-              nineElementExpandedColumn(
-                "First Name",
-                element.firstName,
-                "Last Name",
-                element.lastName,
-                "Nickname",
-                element.nickname,
-                "Url",
-                element.url,
-                "Street",
-                element.street,
-                "City",
-                element.city,
-                "Country",
-                element.country,
-                "Birthday",
-                element.birthDay,
-                "Note",
-                element.note,
-              ),
-              height: 350);
-        },
-      ),
-    );
-  }
-  if (state is ListWifiState) {
-    return SizedBox(
-      width: 375.w,
-      height: 500.w,
-      child: ListView.builder(
-        itemCount: state.qrList.length,
-        itemBuilder: (context, index) {
-          final element = state.qrList[index].wifiModel;
-          return qrCardWidget(
-            qrCodeWidget(state.qrList[index].data),
-            threeElementExpandedColumn("SSID", element.networkName, "Password",
-                element.password, "Security", element.security),
-          );
-        },
-      ),
     );
   }
   return Container();

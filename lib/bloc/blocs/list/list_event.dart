@@ -14,3 +14,12 @@ class ChangeIndexEvent extends ListEvent {
   @override
   List<Object> get props => [newIndex];
 }
+
+class DeleteElementFromListEvent extends ListEvent {
+  final String data;
+  final String type;
+  const DeleteElementFromListEvent(this.data, this.type);
+
+  @override
+  List<Object> get props => [data, type];
+}

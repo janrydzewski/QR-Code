@@ -10,6 +10,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
   final ListRepository listRepository;
   ListBloc({required this.listRepository}) : super(const ListState()) {
     on<ChangeIndexEvent>(_onChangeIndexEvent);
+    on<DeleteElementFromListEvent>(_onDeleteElementFromListEvent);
   }
 
   _onChangeIndexEvent(ChangeIndexEvent event, Emitter<ListState> emit) {
@@ -58,5 +59,14 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       default:
         emit(const ListState(index: 0));
     }
+  }
+
+  _onDeleteElementFromListEvent(
+      DeleteElementFromListEvent event, Emitter<ListState> emit) {
+    emit(const ListLoading());
+    try {
+      listRepository.deleteModelFromFavourite(event.data, event.type);
+      emit(ListState(index: state.index));
+    } catch (e) {}
   }
 }

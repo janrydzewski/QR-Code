@@ -9,6 +9,7 @@ import 'package:qr_code/repositories/repositories.dart';
 import 'package:qr_code/routes/router.dart';
 
 void main() async {
+  Bloc.observer = MyBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
 
   MyRouter myRouter = MyRouter();
@@ -28,8 +29,7 @@ void main() async {
   Hive.registerAdapter(UrlHiveModelAdapter());
   Hive.registerAdapter(VCardHiveModelAdapter());
   Hive.registerAdapter(WifiHiveModelAdapter());
-
-  await Hive.openBox("all");
+  
   await Hive.openBox("email");
   await Hive.openBox("event");
   await Hive.openBox("sms");
