@@ -87,6 +87,7 @@ class MyApp extends StatelessWidget {
           builder: (context, child) {
             return MaterialApp.router(
               title: 'QR Code App',
+              debugShowCheckedModeBanner: false,
               routeInformationProvider: router.routeInformationProvider,
               routeInformationParser: router.routeInformationParser,
               routerDelegate: router.routerDelegate,

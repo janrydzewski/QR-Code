@@ -51,13 +51,19 @@ reusableElevatedButton(Function() func) {
     width: 375.w,
     height: 40.h,
     margin: EdgeInsets.symmetric(horizontal: 100.w),
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: ColorProvider.mainNavBarElementSelected,
+    child: Theme(
+      data: ThemeData(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+        ),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: ColorProvider.mainNavBarElementSelected,
+        ),
+        onPressed: func,
+        child: reusableText("Create QR",
+            fontColor: Colors.white, fontWeight: FontWeight.w700),
       ),
-      onPressed: func,
-      child: reusableText("Create QR",
-          fontColor: Colors.white, fontWeight: FontWeight.w700),
     ),
   );
 }
