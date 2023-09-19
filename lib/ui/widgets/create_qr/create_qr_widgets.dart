@@ -25,18 +25,16 @@ reusableTextFormField(String text, TextEditingController textEditingController,
               type == "number" ? TextInputType.number : TextInputType.text,
           controller: textEditingController,
           decoration: InputDecoration(
-            suffixIcon: type == "date"
-                ? child
-                : Container(),
+            suffixIcon: child,
             fillColor: ColorProvider.mainElement,
             filled: true,
-            enabledBorder: OutlineInputBorder(
+            enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: ColorProvider.mainElement),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: ColorProvider.mainElement),
             ),
-            disabledBorder: OutlineInputBorder(
+            disabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: ColorProvider.mainElement),
             ),
           ),

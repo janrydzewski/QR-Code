@@ -27,6 +27,7 @@ class _VCardScreenState extends State<VCardScreen> {
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
+  String birthDayText = "";
 
   @override
   Widget build(BuildContext context) {
@@ -72,15 +73,21 @@ class _VCardScreenState extends State<VCardScreen> {
                                 brightness: Brightness.dark,
                               ),
                               child: CupertinoDatePicker(
-                                mode: CupertinoDatePickerMode.date,
+                                mode: CupertinoDatePickerMode.dateAndTime,
                                 onDateTimeChanged: (DateTime newDate) {
-                                _birthdayController.text = "${newDate.year}/${newDate.month}/${newDate.day}";
+                                  _birthdayController.text =
+                                      "${newDate.year}/${newDate.month.toString().padLeft(2, '0')}/${newDate.day.toString().padLeft(2, '0')}}";
+                                  birthDayText =
+                                      "${newDate.year}${newDate.month.toString().padLeft(2, '0')}${newDate.day.toString().padLeft(2, '0')}";
                                 },
                               ),
                             );
                           });
                     },
-                    icon: Icon(Icons.date_range_outlined),
+                    icon: const Icon(
+                      Icons.date_range_outlined,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 reusableTextFormField("Note", _noteController),

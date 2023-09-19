@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:qr_code/bloc/bloc.dart';
 import 'package:qr_code/models/models.dart';
 import 'package:qr_code/resources/resources.dart';
@@ -19,6 +20,8 @@ class _VCardScreenState extends State<EventScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _endDateController = TextEditingController();
+  String startDateText = "";
+  String endDateText = "";
 
   @override
   Widget build(BuildContext context) {
@@ -48,16 +51,27 @@ class _VCardScreenState extends State<EventScreen> {
                             data: const CupertinoThemeData(
                               brightness: Brightness.dark,
                             ),
-                            child: CupertinoDatePicker(
-                              mode: CupertinoDatePickerMode.dateAndTime,
-                              onDateTimeChanged: (DateTime newDate) {
-                                _startDateController.text = "${newDate.year}/${newDate.month}/${newDate.day} ${newDate.hour}:${newDate.minute}";
-                              },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 180.h,
+                                  child: CupertinoDatePicker(
+                                    mode: CupertinoDatePickerMode.dateAndTime,
+                                    onDateTimeChanged: (DateTime newDate) {
+                                      _startDateController.text =
+                                          "${newDate.year}/${newDate.month.toString().padLeft(2, '0')}/${newDate.day.toString().padLeft(2, '0')} ${newDate.hour.toString().padLeft(2, '0')}:${newDate.minute.toString().padLeft(2, '0')}";
+                                      startDateText =
+                                          "${newDate.year}${newDate.month.toString().padLeft(2, '0')}${newDate.day.toString().padLeft(2, '0')}T${newDate.hour.toString().padLeft(2, '0')}${newDate.minute.toString().padLeft(2, '0')}00";
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
                           );
                         });
                   },
-                  icon: Icon(Icons.date_range_outlined),
+                  icon: const Icon(Icons.date_range_outlined, color: Colors.white,),
                 ),
               ),
               reusableTextFormField(
@@ -76,13 +90,16 @@ class _VCardScreenState extends State<EventScreen> {
                             child: CupertinoDatePicker(
                               mode: CupertinoDatePickerMode.dateAndTime,
                               onDateTimeChanged: (DateTime newDate) {
-                                _endDateController.text = "${newDate.year}/${newDate.month}/${newDate.day} ${newDate.hour}:${newDate.minute}";
+                                _endDateController.text =
+                                    "${newDate.year}/${newDate.month.toString().padLeft(2, '0')}/${newDate.day.toString().padLeft(2, '0')} ${newDate.hour.toString().padLeft(2, '0')}:${newDate.minute.toString().padLeft(2, '0')}";
+                                endDateText =
+                                    "${newDate.year}${newDate.month.toString().padLeft(2, '0')}${newDate.day.toString().padLeft(2, '0')}T${newDate.hour.toString().padLeft(2, '0')}${newDate.minute.toString().padLeft(2, '0')}00";
                               },
                             ),
                           );
                         });
                   },
-                  icon: Icon(Icons.date_range_outlined),
+                  icon: const Icon(Icons.date_range_outlined, color: Colors.white,),
                 ),
               ),
               reusableElevatedButton(() {
@@ -90,8 +107,8 @@ class _VCardScreenState extends State<EventScreen> {
                       GenerateEventEvent(
                         EventModel(
                           _titleController.text,
-                          _startDateController.text,
-                          _endDateController.text,
+                          startDateText,
+                          endDateText,
                         ),
                       ),
                     );
