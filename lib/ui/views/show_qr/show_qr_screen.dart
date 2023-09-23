@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qr_code/bloc/bloc.dart';
 import 'package:qr_code/resources/resources.dart';
-import 'package:qr_code/ui/widgets/common_widgets.dart';
+import 'package:qr_code/ui/ui.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ShowQrScreen extends StatefulWidget {

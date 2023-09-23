@@ -76,7 +76,7 @@ class _VCardScreenState extends State<VCardScreen> {
                                 mode: CupertinoDatePickerMode.dateAndTime,
                                 onDateTimeChanged: (DateTime newDate) {
                                   _birthdayController.text =
-                                      "${newDate.year}/${newDate.month.toString().padLeft(2, '0')}/${newDate.day.toString().padLeft(2, '0')}}";
+                                      "${newDate.year}/${newDate.month.toString().padLeft(2, '0')}/${newDate.day.toString().padLeft(2, '0')}";
                                   birthDayText =
                                       "${newDate.year}${newDate.month.toString().padLeft(2, '0')}${newDate.day.toString().padLeft(2, '0')}";
                                 },

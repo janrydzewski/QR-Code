@@ -35,7 +35,7 @@ class _VCardScreenState extends State<WifiScreen> {
               ),
               reusableTextFormField("Network Name", _networkNameController),
               reusableTextFormField("Password", _passwordController),
-              reusableTextFormField("Security", _securityController),
+              SecurityWidget(textEditingController: _securityController,),
               reusableElevatedButton(() {
                 context.read<CreateQrBloc>().add(
                       GenerateWifiEvent(
