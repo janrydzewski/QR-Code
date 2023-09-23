@@ -38,6 +38,52 @@ class _ShowQrScreenState extends State<ShowQrScreen> {
                   ),
                 );
               }
+              if (state is CreateEmailState) {
+                return Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    SizedBox(
+                      height: 25.h,
+                    ),
+                    reusableText(
+                      "Email",
+                      fontColor: Colors.white,
+                      fontSize: 24,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 50.h),
+                      width: 375.w,
+                      height: 250.w,
+                      alignment: Alignment.center,
+                      child: QrImageView(
+                        data: state.dataCode,
+                        version: QrVersions.auto,
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            reusableRow(
+                              "Email: ",
+                              state.model.emailModel.email,
+                            ),
+                            reusableRow(
+                              "Subject: ",
+                              state.model.emailModel.subject,
+                            ),
+                            reusableRow(
+                              "Message: ",
+                              state.model.emailModel.message,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

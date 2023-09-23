@@ -24,7 +24,7 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
     try {
       String result = createQrRepository.createEmailQrCode(event.emailModel);
       Hive.box("email").add(EmailHiveModel(event.emailModel, result));
-      emit(CreateQrState(dataCode: result));
+      emit(CreateEmailState(model: EmailHiveModel(event.emailModel, result)));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
@@ -36,7 +36,7 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
       String result = createQrRepository.createEventQrCode(event.eventModel);
       Hive.box("event").add(EventHiveModel(event.eventModel, result));
       print(result);
-      emit(CreateQrState(dataCode: result));
+      emit(CreateEventState(model: EventHiveModel(event.eventModel, result)));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
@@ -47,7 +47,7 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
     try {
       String result = createQrRepository.createSmsQrCode(event.smsModel);
       Hive.box("sms").add(SmsHiveModel(event.smsModel, result));
-      emit(CreateQrState(dataCode: result));
+      emit(CreateSmsState(model: SmsHiveModel(event.smsModel, result)));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
@@ -58,7 +58,7 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
     try {
       String result = createQrRepository.createUrlQrCode(event.urlModel);
       Hive.box("url").add(UrlHiveModel(event.urlModel, result));
-      emit(CreateQrState(dataCode: result));
+      emit(CreateUrlState(model: UrlHiveModel(event.urlModel, result)));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
@@ -69,7 +69,7 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
     try {
       String result = createQrRepository.createVCardQrCode(event.vCardModel);
       Hive.box("vcard").add(VCardHiveModel(event.vCardModel, result));
-      emit(CreateQrState(dataCode: result));
+      emit(CreateVCardState(model: VCardHiveModel(event.vCardModel, result)));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
@@ -80,7 +80,7 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
     try {
       String result = createQrRepository.createWifiQrCode(event.wifiModel);
       Hive.box("wifi").add(WifiHiveModel(event.wifiModel, result));
-      emit(CreateQrState(dataCode: result));
+      emit(CreateWifiState(model: WifiHiveModel(event.wifiModel, result)));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
     }
