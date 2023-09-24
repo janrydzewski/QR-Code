@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:qr_code/bloc/bloc.dart';
 import 'package:qr_code/resources/resources.dart';
 import 'package:qr_code/ui/ui.dart';
@@ -14,7 +15,6 @@ class ShowQrScreen extends StatefulWidget {
 }
 
 class _ShowQrScreenState extends State<ShowQrScreen> {
-
   final GlobalKey globalKey = GlobalKey();
 
   @override
@@ -64,12 +64,19 @@ class _ShowQrScreenState extends State<ShowQrScreen> {
                     topBarMainWidget("Event", globalKey, context),
                     qrCodeMainWidget(state, globalKey),
                     threeElementExpandedColumnWidget(
-                        "Title: ",
-                        state.model.eventModel.title,
-                        "Start Date: ",
-                        state.model.eventModel.startDate,
-                        "End Date: ",
-                        state.model.eventModel.endDate),
+                      "Title: ",
+                      state.model.eventModel.title,
+                      "Start Date: ",
+                      DateFormat('yyyy/MM/dd HH:mm')
+                          .format(
+                              DateTime.parse(state.model.eventModel.startDate))
+                          .toString(),
+                      "End Date: ",
+                      DateFormat('yyyy/MM/dd HH:mm')
+                          .format(
+                              DateTime.parse(state.model.eventModel.endDate))
+                          .toString(),
+                    ),
                   ],
                 );
               }
@@ -108,26 +115,27 @@ class _ShowQrScreenState extends State<ShowQrScreen> {
                     topBarMainWidget("VCard", globalKey, context),
                     qrCodeMainWidget(state, globalKey),
                     tenElementExpandedColumnWidget(
-                        "First Name: ",
-                        state.model.vCardModel.firstName,
-                        "Last Date: ",
-                        state.model.vCardModel.lastName,
-                        "Photo Number: ",
-                        state.model.vCardModel.number,
-                         "Nickname: ",
-                        state.model.vCardModel.nickname,
-                        "Url: ",
-                        state.model.vCardModel.url,
-                         "Street: ",
-                        state.model.vCardModel.street,
-                         "City: ",
-                        state.model.vCardModel.city,
-                         "Country: ",
-                        state.model.vCardModel.country,
-                         "Birthday: ",
-                        state.model.vCardModel.birthDay,
-                         "Note: ",
-                        state.model.vCardModel.note,),
+                      "First Name: ",
+                      state.model.vCardModel.firstName,
+                      "Last Date: ",
+                      state.model.vCardModel.lastName,
+                      "Photo Number: ",
+                      state.model.vCardModel.number,
+                      "Nickname: ",
+                      state.model.vCardModel.nickname,
+                      "Url: ",
+                      state.model.vCardModel.url,
+                      "Street: ",
+                      state.model.vCardModel.street,
+                      "City: ",
+                      state.model.vCardModel.city,
+                      "Country: ",
+                      state.model.vCardModel.country,
+                      "Birthday: ",
+                      state.model.vCardModel.birthDay,
+                      "Note: ",
+                      state.model.vCardModel.note,
+                    ),
                   ],
                 );
               }
