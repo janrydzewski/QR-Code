@@ -26,30 +26,33 @@ class VCardModelAdapter extends TypeAdapter<VCardModel> {
       fields[6] as String,
       fields[7] as String,
       fields[8] as String,
+      fields[9] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, VCardModel obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.firstName)
       ..writeByte(1)
       ..write(obj.lastName)
       ..writeByte(2)
-      ..write(obj.nickname)
+      ..write(obj.number)
       ..writeByte(3)
-      ..write(obj.url)
+      ..write(obj.nickname)
       ..writeByte(4)
-      ..write(obj.street)
+      ..write(obj.url)
       ..writeByte(5)
-      ..write(obj.city)
+      ..write(obj.street)
       ..writeByte(6)
-      ..write(obj.country)
+      ..write(obj.city)
       ..writeByte(7)
-      ..write(obj.birthDay)
+      ..write(obj.country)
       ..writeByte(8)
+      ..write(obj.birthDay)
+      ..writeByte(9)
       ..write(obj.note);
   }
 

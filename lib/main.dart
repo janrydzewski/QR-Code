@@ -29,21 +29,13 @@ void main() async {
   Hive.registerAdapter(UrlHiveModelAdapter());
   Hive.registerAdapter(VCardHiveModelAdapter());
   Hive.registerAdapter(WifiHiveModelAdapter());
-  
-  await Hive.openBox("email");
-  await Hive.openBox("event");
-  await Hive.openBox("sms");
-  await Hive.openBox("url");
-  await Hive.openBox("vcard");
-  await Hive.openBox("wifi");
 
-  // Hive.box("all").clear();
-  // Hive.box("email").clear();
-  // Hive.box("event").clear();
-  // Hive.box("sms").clear();
-  // Hive.box("url").clear();
-  // Hive.box("vcard").clear();
-  // Hive.box("wifi").clear();
+  await Hive.openBox("emailBox");
+  await Hive.openBox("eventBox");
+  await Hive.openBox("smsBox");
+  await Hive.openBox("urlBox");
+  await Hive.openBox("vcardBox");
+  await Hive.openBox("wifiBox");
 
   runApp(MyApp(
     router: myRouter.router,

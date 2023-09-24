@@ -14,6 +14,9 @@ class ShowQrScreen extends StatefulWidget {
 }
 
 class _ShowQrScreenState extends State<ShowQrScreen> {
+
+  final GlobalKey globalKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -42,45 +45,105 @@ class _ShowQrScreenState extends State<ShowQrScreen> {
                 return Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    SizedBox(
-                      height: 25.h,
+                    topBarMainWidget("Email", globalKey, context),
+                    qrCodeMainWidget(state, globalKey),
+                    threeElementExpandedColumnWidget(
+                        "Email: ",
+                        state.model.emailModel.email,
+                        "Subject: ",
+                        state.model.emailModel.subject,
+                        "Message: ",
+                        state.model.emailModel.message),
+                  ],
+                );
+              }
+              if (state is CreateEventState) {
+                return Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    topBarMainWidget("Event", globalKey, context),
+                    qrCodeMainWidget(state, globalKey),
+                    threeElementExpandedColumnWidget(
+                        "Title: ",
+                        state.model.eventModel.title,
+                        "Start Date: ",
+                        state.model.eventModel.startDate,
+                        "End Date: ",
+                        state.model.eventModel.endDate),
+                  ],
+                );
+              }
+              if (state is CreateSmsState) {
+                return Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    topBarMainWidget("Sms", globalKey, context),
+                    qrCodeMainWidget(state, globalKey),
+                    twoElementExpandedColumnWidget(
+                      "Email: ",
+                      state.model.smsModel.number,
+                      "Subject: ",
+                      state.model.smsModel.message,
                     ),
-                    reusableText(
-                      "Email",
-                      fontColor: Colors.white,
-                      fontSize: 24,
+                  ],
+                );
+              }
+              if (state is CreateUrlState) {
+                return Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    topBarMainWidget("Url", globalKey, context),
+                    qrCodeMainWidget(state, globalKey),
+                    oneElementExpandedColumnWidget(
+                      "Url: ",
+                      state.model.urlModel.url,
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 50.h),
-                      width: 375.w,
-                      height: 250.w,
-                      alignment: Alignment.center,
-                      child: QrImageView(
-                        data: state.dataCode,
-                        version: QrVersions.auto,
-                        backgroundColor: Colors.white,
-                      ),
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            reusableRow(
-                              "Email: ",
-                              state.model.emailModel.email,
-                            ),
-                            reusableRow(
-                              "Subject: ",
-                              state.model.emailModel.subject,
-                            ),
-                            reusableRow(
-                              "Message: ",
-                              state.model.emailModel.message,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  ],
+                );
+              }
+              if (state is CreateVCardState) {
+                return Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    topBarMainWidget("VCard", globalKey, context),
+                    qrCodeMainWidget(state, globalKey),
+                    tenElementExpandedColumnWidget(
+                        "First Name: ",
+                        state.model.vCardModel.firstName,
+                        "Last Date: ",
+                        state.model.vCardModel.lastName,
+                        "Photo Number: ",
+                        state.model.vCardModel.number,
+                         "Nickname: ",
+                        state.model.vCardModel.nickname,
+                        "Url: ",
+                        state.model.vCardModel.url,
+                         "Street: ",
+                        state.model.vCardModel.street,
+                         "City: ",
+                        state.model.vCardModel.city,
+                         "Country: ",
+                        state.model.vCardModel.country,
+                         "Birthday: ",
+                        state.model.vCardModel.birthDay,
+                         "Note: ",
+                        state.model.vCardModel.note,),
+                  ],
+                );
+              }
+              if (state is CreateWifiState) {
+                return Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    topBarMainWidget("Wifi", globalKey, context),
+                    qrCodeMainWidget(state, globalKey),
+                    threeElementExpandedColumnWidget(
+                        "Network: ",
+                        state.model.wifiModel.networkName,
+                        "Password: ",
+                        state.model.wifiModel.password,
+                        "Security: ",
+                        state.model.wifiModel.security),
                   ],
                 );
               }

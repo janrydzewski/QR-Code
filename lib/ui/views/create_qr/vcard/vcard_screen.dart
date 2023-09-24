@@ -97,6 +97,7 @@ class _VCardScreenState extends State<VCardScreen> {
                           VCardModel(
                             _firstNameController.text,
                             _lastNameController.text,
+                            _phoneNumberController.text,
                             _nickNameController.text,
                             _websiteController.text,
                             _streetController.text,

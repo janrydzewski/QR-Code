@@ -42,7 +42,7 @@ class _VCardScreenState extends State<WifiScreen> {
                         WifiModel(
                           _networkNameController.text,
                           _passwordController.text,
-                          _securityController.text,
+                          "WPA2",
                         ),
                       ),
                     );

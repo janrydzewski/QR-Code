@@ -4,7 +4,6 @@ part 'vcard.g.dart';
 
 @HiveType(typeId: 11)
 class VCardModel {
-
   @HiveField(0)
   final String firstName;
 
@@ -12,34 +11,39 @@ class VCardModel {
   final String lastName;
 
   @HiveField(2)
-  final String nickname;
+  final String number;
 
   @HiveField(3)
-  final String url;
+  final String nickname;
 
   @HiveField(4)
-  final String street;
+  final String url;
 
   @HiveField(5)
-  final String city;
+  final String street;
 
   @HiveField(6)
-  final String country;
+  final String city;
 
   @HiveField(7)
-  final String birthDay;
+  final String country;
 
   @HiveField(8)
+  final String birthDay;
+
+  @HiveField(9)
   final String note;
 
   const VCardModel(
-      this.firstName,
-      this.lastName,
-      this.nickname,
-      this.url,
-      this.street,
-      this.city,
-      this.country,
-      this.birthDay,
-      this.note);
+    this.firstName,
+    this.lastName,
+    this.number,
+    this.nickname,
+    this.url,
+    this.street,
+    this.city,
+    this.country,
+    this.birthDay,
+    this.note,
+  );
 }

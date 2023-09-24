@@ -23,7 +23,7 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
     emit(const CreateQrLoading());
     try {
       String result = createQrRepository.createEmailQrCode(event.emailModel);
-      Hive.box("email").add(EmailHiveModel(event.emailModel, result));
+      Hive.box("emailBox").add(EmailHiveModel(event.emailModel, result));
       emit(CreateEmailState(model: EmailHiveModel(event.emailModel, result)));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
@@ -34,7 +34,7 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
     emit(const CreateQrLoading());
     try {
       String result = createQrRepository.createEventQrCode(event.eventModel);
-      Hive.box("event").add(EventHiveModel(event.eventModel, result));
+      Hive.box("eventBox").add(EventHiveModel(event.eventModel, result));
       print(result);
       emit(CreateEventState(model: EventHiveModel(event.eventModel, result)));
     } catch (e) {
@@ -46,7 +46,7 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
     emit(const CreateQrLoading());
     try {
       String result = createQrRepository.createSmsQrCode(event.smsModel);
-      Hive.box("sms").add(SmsHiveModel(event.smsModel, result));
+      Hive.box("smsBox").add(SmsHiveModel(event.smsModel, result));
       emit(CreateSmsState(model: SmsHiveModel(event.smsModel, result)));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
@@ -57,7 +57,7 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
     emit(const CreateQrLoading());
     try {
       String result = createQrRepository.createUrlQrCode(event.urlModel);
-      Hive.box("url").add(UrlHiveModel(event.urlModel, result));
+      Hive.box("urlBox").add(UrlHiveModel(event.urlModel, result));
       emit(CreateUrlState(model: UrlHiveModel(event.urlModel, result)));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
@@ -68,7 +68,7 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
     emit(const CreateQrLoading());
     try {
       String result = createQrRepository.createVCardQrCode(event.vCardModel);
-      Hive.box("vcard").add(VCardHiveModel(event.vCardModel, result));
+      Hive.box("vcardBox").add(VCardHiveModel(event.vCardModel, result));
       emit(CreateVCardState(model: VCardHiveModel(event.vCardModel, result)));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
@@ -79,7 +79,7 @@ class CreateQrBloc extends Bloc<CreateQrEvent, CreateQrState> {
     emit(const CreateQrLoading());
     try {
       String result = createQrRepository.createWifiQrCode(event.wifiModel);
-      Hive.box("wifi").add(WifiHiveModel(event.wifiModel, result));
+      Hive.box("wifiBox").add(WifiHiveModel(event.wifiModel, result));
       emit(CreateWifiState(model: WifiHiveModel(event.wifiModel, result)));
     } catch (e) {
       emit(CreateQrError(message: e.toString()));
