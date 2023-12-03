@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_code/bloc/bloc.dart';
+import 'package:qr_code/models/qr_codes/qr_codes.dart';
 import 'package:qr_code/resources/resources.dart';
 import 'package:qr_code/ui/ui.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -89,7 +91,7 @@ Widget qrCardWidget(Widget child1, Widget child2, String data, String type,
         color: ColorProvider.mainElement,
         borderRadius: BorderRadius.circular(15)),
     margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
-    padding: const EdgeInsets.symmetric(horizontal: 12),
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
     child: Stack(
       children: [
         Row(
@@ -103,7 +105,6 @@ Widget qrCardWidget(Widget child1, Widget child2, String data, String type,
           right: 0,
           child: GestureDetector(
             onTap: () {
-              print("delte");
               context
                   .read<ListBloc>()
                   .add(DeleteElementFromListEvent(data, type));
@@ -143,18 +144,29 @@ Widget listWidget(ListState state) {
                     itemCount: state.emailList.length,
                     itemBuilder: (context, index) {
                       final element = state.emailList[index].emailModel;
-                      return qrCardWidget(
-                        qrCodeWidget(state.emailList[index].data),
-                        threeElementExpandedColumn(
-                            "Email",
-                            element.email,
-                            "Subject",
-                            element.subject,
-                            "Message",
-                            element.message),
-                        state.emailList[index].data,
-                        "email",
-                        context,
+                      return GestureDetector(
+                        onTap: () {
+                          context.read<CreateQrBloc>().add(
+                                ShowEmailEvent(
+                                  EmailModel(element.email, element.subject,
+                                      element.message),
+                                ),
+                              );
+                          context.go("/list/showQr");
+                        },
+                        child: qrCardWidget(
+                          qrCodeWidget(state.emailList[index].data),
+                          threeElementExpandedColumn(
+                              "Email",
+                              element.email,
+                              "Subject",
+                              element.subject,
+                              "Message",
+                              element.message),
+                          state.emailList[index].data,
+                          "email",
+                          context,
+                        ),
                       );
                     },
                   ),
@@ -164,23 +176,34 @@ Widget listWidget(ListState state) {
                     itemCount: state.eventList.length,
                     itemBuilder: (context, index) {
                       final element = state.eventList[index].eventModel;
-                      return qrCardWidget(
-                        qrCodeWidget(state.eventList[index].data),
-                        threeElementExpandedColumn(
-                          "Title",
-                          element.title,
-                          "Start at",
-                          DateFormat('yyyy/MM/dd HH:mm')
-                              .format(DateTime.parse(element.startDate))
-                              .toString(),
-                          "End at",
-                          DateFormat('yyyy/MM/dd HH:mm')
-                              .format(DateTime.parse(element.endDate))
-                              .toString(),
+                      return GestureDetector(
+                        onTap: () {
+                          context.read<CreateQrBloc>().add(
+                                ShowEventEvent(
+                                  EventModel(element.title, element.startDate,
+                                      element.endDate),
+                                ),
+                              );
+                          context.go("/list/showQr");
+                        },
+                        child: qrCardWidget(
+                          qrCodeWidget(state.eventList[index].data),
+                          threeElementExpandedColumn(
+                            "Title",
+                            element.title,
+                            "Start at",
+                            DateFormat('yyyy/MM/dd HH:mm')
+                                .format(DateTime.parse(element.startDate))
+                                .toString(),
+                            "End at",
+                            DateFormat('yyyy/MM/dd HH:mm')
+                                .format(DateTime.parse(element.endDate))
+                                .toString(),
+                          ),
+                          state.eventList[index].data,
+                          "event",
+                          context,
                         ),
-                        state.eventList[index].data,
-                        "event",
-                        context,
                       );
                     },
                   ),
@@ -190,13 +213,26 @@ Widget listWidget(ListState state) {
                     itemCount: state.smsList.length,
                     itemBuilder: (context, index) {
                       final element = state.smsList[index].smsModel;
-                      return qrCardWidget(
-                        qrCodeWidget(state.smsList[index].data),
-                        twoElementExpandedColumn("Phone number", element.number,
-                            "Message", element.message),
-                        state.smsList[index].data,
-                        "sms",
-                        context,
+                      return GestureDetector(
+                        onTap: () {
+                          context.read<CreateQrBloc>().add(
+                                ShowSmsEvent(
+                                  SmsModel(
+                                    element.number,
+                                    element.message,
+                                  ),
+                                ),
+                              );
+                          context.go("/list/showQr");
+                        },
+                        child: qrCardWidget(
+                          qrCodeWidget(state.smsList[index].data),
+                          twoElementExpandedColumn("Phone number",
+                              element.number, "Message", element.message),
+                          state.smsList[index].data,
+                          "sms",
+                          context,
+                        ),
                       );
                     },
                   ),
@@ -206,12 +242,24 @@ Widget listWidget(ListState state) {
                     itemCount: state.urlList.length,
                     itemBuilder: (context, index) {
                       final element = state.urlList[index].urlModel;
-                      return qrCardWidget(
-                        qrCodeWidget(state.urlList[index].data),
-                        oneElementExpandedColumn("Url", element.url),
-                        state.urlList[index].data,
-                        "url",
-                        context,
+                      return GestureDetector(
+                        onTap: () {
+                          context.read<CreateQrBloc>().add(
+                                ShowUrlEvent(
+                                  UrlModel(
+                                    element.url,
+                                  ),
+                                ),
+                              );
+                          context.go("/list/showQr");
+                        },
+                        child: qrCardWidget(
+                          qrCodeWidget(state.urlList[index].data),
+                          oneElementExpandedColumn("Url", element.url),
+                          state.urlList[index].data,
+                          "url",
+                          context,
+                        ),
                       );
                     },
                   ),
@@ -221,34 +269,48 @@ Widget listWidget(ListState state) {
                     itemCount: state.vcardList.length,
                     itemBuilder: (context, index) {
                       final element = state.vcardList[index].vCardModel;
-                      return qrCardWidget(
-                          qrCodeWidget(state.vcardList[index].data),
-                          nineElementExpandedColumn(
-                            "First Name",
-                            element.firstName,
-                            "Last Name",
-                            element.lastName,
-                            "Phone Number",
-                            element.number,
-                            "Nickname",
-                            element.nickname,
-                            "Url",
-                            element.url,
-                            "Street",
-                            element.street,
-                            "City",
-                            element.city,
-                            "Country",
-                            element.country,
-                            "Birthday",
-                            element.birthDay,
-                            "Note",
-                            element.note,
-                          ),
-                          state.vcardList[index].data,
-                          "vcard",
-                          context,
-                          height: 350);
+                      return GestureDetector(
+                        onTap: () {
+                          context.read<CreateQrBloc>().add(
+                                ShowVCardEvent(
+                                  VCardModel(
+                                      element.firstName,
+                                      element.lastName,
+                                      element.number,
+                                      element.nickname,
+                                      element.url,
+                                      "",
+                                      "",
+                                      "",
+                                      element.birthDay,
+                                      element.note),
+                                ),
+                              );
+                          context.go("/list/showQr");
+                        },
+                        child: qrCardWidget(
+                            qrCodeWidget(state.vcardList[index].data),
+                            nineElementExpandedColumn(
+                              "First Name",
+                              element.firstName,
+                              "Last Name",
+                              element.lastName,
+                              "Phone Number",
+                              element.number,
+                              "Nickname",
+                              element.nickname,
+                              "Url",
+                              element.url,
+                              "Birthday",
+                              element.birthDay,
+                              "Note",
+                              element.note,
+                            ),
+                            state.vcardList[index].data,
+                            "vcard",
+                            context,
+                            height: 350),
+                      );
                     },
                   ),
                   ListView.builder(
@@ -257,18 +319,29 @@ Widget listWidget(ListState state) {
                     itemCount: state.wifiList.length,
                     itemBuilder: (context, index) {
                       final element = state.wifiList[index].wifiModel;
-                      return qrCardWidget(
-                        qrCodeWidget(state.wifiList[index].data),
-                        threeElementExpandedColumn(
-                            "SSID",
-                            element.networkName,
-                            "Password",
-                            element.password,
-                            "Security",
-                            element.security),
-                        state.wifiList[index].data,
-                        "wifi",
-                        context,
+                      return GestureDetector(
+                        onTap: () {
+                          context.read<CreateQrBloc>().add(
+                                ShowWifiEvent(
+                                  WifiModel(element.networkName,
+                                      element.password, element.security),
+                                ),
+                              );
+                          context.go("/list/showQr");
+                        },
+                        child: qrCardWidget(
+                          qrCodeWidget(state.wifiList[index].data),
+                          threeElementExpandedColumn(
+                              "SSID",
+                              element.networkName,
+                              "Password",
+                              element.password,
+                              "Security",
+                              element.security),
+                          state.wifiList[index].data,
+                          "wifi",
+                          context,
+                        ),
                       );
                     },
                   ),
@@ -290,14 +363,30 @@ Widget listWidget(ListState state) {
               itemCount: state.qrList.length,
               itemBuilder: (context, index) {
                 final element = state.qrList[index].emailModel;
-                return qrCardWidget(
-                  qrCodeWidget(state.qrList[index].data),
-                  threeElementExpandedColumn("Email", element.email, "Subject",
-                      element.subject, "Message", element.message),
-                  state.qrList[index].data,
-                  "email",
-                  context,
-                );
+                return GestureDetector(
+                        onTap: () {
+                          context.read<CreateQrBloc>().add(
+                                ShowEmailEvent(
+                                  EmailModel(element.email, element.subject,
+                                      element.message),
+                                ),
+                              );
+                          context.go("/list/showQr");
+                        },
+                        child: qrCardWidget(
+                          qrCodeWidget(state.qrList[index].data),
+                          threeElementExpandedColumn(
+                              "Email",
+                              element.email,
+                              "Subject",
+                              element.subject,
+                              "Message",
+                              element.message),
+                          state.qrList[index].data,
+                          "email",
+                          context,
+                        ),
+                      );
               },
             )
           : Center(
@@ -315,24 +404,35 @@ Widget listWidget(ListState state) {
               itemCount: state.qrList.length,
               itemBuilder: (context, index) {
                 final element = state.qrList[index].eventModel;
-                return qrCardWidget(
-                  qrCodeWidget(state.qrList[index].data),
-                  threeElementExpandedColumn(
-                    "Title",
-                    element.title,
-                    "Start at",
-                    DateFormat('yyyy/MM/dd HH:mm')
-                        .format(DateTime.parse(element.startDate))
-                        .toString(),
-                    "End at",
-                    DateFormat('yyyy/MM/dd HH:mm')
-                        .format(DateTime.parse(element.endDate))
-                        .toString(),
-                  ),
-                  state.qrList[index].data,
-                  "event",
-                  context,
-                );
+                return GestureDetector(
+                        onTap: () {
+                          context.read<CreateQrBloc>().add(
+                                ShowEventEvent(
+                                  EventModel(element.title, element.startDate,
+                                      element.endDate),
+                                ),
+                              );
+                          context.go("/list/showQr");
+                        },
+                        child: qrCardWidget(
+                          qrCodeWidget(state.qrList[index].data),
+                          threeElementExpandedColumn(
+                            "Title",
+                            element.title,
+                            "Start at",
+                            DateFormat('yyyy/MM/dd HH:mm')
+                                .format(DateTime.parse(element.startDate))
+                                .toString(),
+                            "End at",
+                            DateFormat('yyyy/MM/dd HH:mm')
+                                .format(DateTime.parse(element.endDate))
+                                .toString(),
+                          ),
+                          state.qrList[index].data,
+                          "event",
+                          context,
+                        ),
+                      );
               },
             )
           : Center(
@@ -350,14 +450,27 @@ Widget listWidget(ListState state) {
               itemCount: state.qrList.length,
               itemBuilder: (context, index) {
                 final element = state.qrList[index].smsModel;
-                return qrCardWidget(
-                  qrCodeWidget(state.qrList[index].data),
-                  twoElementExpandedColumn("Phone number", element.number,
-                      "Message", element.message),
-                  state.qrList[index].data,
-                  "sms",
-                  context,
-                );
+                return GestureDetector(
+                        onTap: () {
+                          context.read<CreateQrBloc>().add(
+                                ShowSmsEvent(
+                                  SmsModel(
+                                    element.number,
+                                    element.message,
+                                  ),
+                                ),
+                              );
+                          context.go("/list/showQr");
+                        },
+                        child: qrCardWidget(
+                          qrCodeWidget(state.qrList[index].data),
+                          twoElementExpandedColumn("Phone number",
+                              element.number, "Message", element.message),
+                          state.qrList[index].data,
+                          "sms",
+                          context,
+                        ),
+                      );
               },
             )
           : Center(
@@ -375,13 +488,25 @@ Widget listWidget(ListState state) {
               itemCount: state.qrList.length,
               itemBuilder: (context, index) {
                 final element = state.qrList[index].urlModel;
-                return qrCardWidget(
-                  qrCodeWidget(state.qrList[index].data),
-                  oneElementExpandedColumn("Url", element.url),
-                  state.qrList[index].data,
-                  "url",
-                  context,
-                );
+                return GestureDetector(
+                        onTap: () {
+                          context.read<CreateQrBloc>().add(
+                                ShowUrlEvent(
+                                  UrlModel(
+                                    element.url,
+                                  ),
+                                ),
+                              );
+                          context.go("/list/showQr");
+                        },
+                        child: qrCardWidget(
+                          qrCodeWidget(state.qrList[index].data),
+                          oneElementExpandedColumn("Url", element.url),
+                          state.qrList[index].data,
+                          "url",
+                          context,
+                        ),
+                      );
               },
             )
           : Center(
@@ -399,34 +524,48 @@ Widget listWidget(ListState state) {
               itemCount: state.qrList.length,
               itemBuilder: (context, index) {
                 final element = state.qrList[index].vCardModel;
-                return qrCardWidget(
-                    qrCodeWidget(state.qrList[index].data),
-                    nineElementExpandedColumn(
-                      "First Name",
-                      element.firstName,
-                      "Last Name",
-                      element.lastName,
-                      "Phone Number",
-                      element.number,
-                      "Nickname",
-                      element.nickname,
-                      "Url",
-                      element.url,
-                      "Street",
-                      element.street,
-                      "City",
-                      element.city,
-                      "Country",
-                      element.country,
-                      "Birthday",
-                      element.birthDay,
-                      "Note",
-                      element.note,
-                    ),
-                    state.qrList[index].data,
-                    "vcard",
-                    context,
-                    height: 350);
+                return GestureDetector(
+                        onTap: () {
+                          context.read<CreateQrBloc>().add(
+                                ShowVCardEvent(
+                                  VCardModel(
+                                      element.firstName,
+                                      element.lastName,
+                                      element.number,
+                                      element.nickname,
+                                      element.url,
+                                      "",
+                                      "",
+                                      "",
+                                      element.birthDay,
+                                      element.note),
+                                ),
+                              );
+                          context.go("/list/showQr");
+                        },
+                        child: qrCardWidget(
+                            qrCodeWidget(state.qrList[index].data),
+                            nineElementExpandedColumn(
+                              "First Name",
+                              element.firstName,
+                              "Last Name",
+                              element.lastName,
+                              "Phone Number",
+                              element.number,
+                              "Nickname",
+                              element.nickname,
+                              "Url",
+                              element.url,
+                              "Birthday",
+                              element.birthDay,
+                              "Note",
+                              element.note,
+                            ),
+                            state.qrList[index].data,
+                            "vcard",
+                            context,
+                            height: 350),
+                      );
               },
             )
           : Center(
@@ -444,19 +583,30 @@ Widget listWidget(ListState state) {
               itemCount: state.qrList.length,
               itemBuilder: (context, index) {
                 final element = state.qrList[index].wifiModel;
-                return qrCardWidget(
-                  qrCodeWidget(state.qrList[index].data),
-                  threeElementExpandedColumn(
-                      "SSID",
-                      element.networkName,
-                      "Password",
-                      element.password,
-                      "Security",
-                      element.security),
-                  state.qrList[index].data,
-                  "wifi",
-                  context,
-                );
+                return GestureDetector(
+                        onTap: () {
+                          context.read<CreateQrBloc>().add(
+                                ShowWifiEvent(
+                                  WifiModel(element.networkName,
+                                      element.password, element.security),
+                                ),
+                              );
+                          context.go("/list/showQr");
+                        },
+                        child: qrCardWidget(
+                          qrCodeWidget(state.qrList[index].data),
+                          threeElementExpandedColumn(
+                              "SSID",
+                              element.networkName,
+                              "Password",
+                              element.password,
+                              "Security",
+                              element.security),
+                          state.qrList[index].data,
+                          "wifi",
+                          context,
+                        ),
+                      );
               },
             )
           : Center(
@@ -570,12 +720,6 @@ nineElementExpandedColumn(
   String text12,
   String text13,
   String text14,
-  String text15,
-  String text16,
-  String text17,
-  String text18,
-  String text19,
-  String text20,
 ) {
   return Expanded(
     child: Container(
@@ -592,9 +736,6 @@ nineElementExpandedColumn(
           elementOfExpandedColumn(text9, text10),
           elementOfExpandedColumn(text11, text12),
           elementOfExpandedColumn(text13, text14),
-          elementOfExpandedColumn(text15, text16),
-          elementOfExpandedColumn(text17, text18),
-          elementOfExpandedColumn(text19, text20)
         ],
       ),
     ),

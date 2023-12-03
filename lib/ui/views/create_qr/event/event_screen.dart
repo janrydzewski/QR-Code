@@ -46,31 +46,31 @@ class _VCardScreenState extends State<EventScreen> {
                     showCupertinoModalPopup(
                         context: context,
                         builder: (BuildContext context) {
-                          return CupertinoTheme(
-                            data: const CupertinoThemeData(
-                              brightness: Brightness.dark,
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: 180.h,
-                                  child: CupertinoDatePicker(
-                                    mode: CupertinoDatePickerMode.dateAndTime,
-                                    onDateTimeChanged: (DateTime newDate) {
-                                      _startDateController.text =
-                                          "${newDate.year}/${newDate.month.toString().padLeft(2, '0')}/${newDate.day.toString().padLeft(2, '0')} ${newDate.hour.toString().padLeft(2, '0')}:${newDate.minute.toString().padLeft(2, '0')}";
-                                      startDateText =
-                                          "${newDate.year}${newDate.month.toString().padLeft(2, '0')}${newDate.day.toString().padLeft(2, '0')}T${newDate.hour.toString().padLeft(2, '0')}${newDate.minute.toString().padLeft(2, '0')}00";
-                                    },
-                                  ),
-                                ),
-                              ],
+                          return Container(
+                            height: 300,
+                            margin: const EdgeInsets.only(bottom: 100),
+                            color: ColorProvider.mainBackground,
+                            child: CupertinoTheme(
+                              data: const CupertinoThemeData(
+                                brightness: Brightness.dark,
+                              ),
+                              child: CupertinoDatePicker(
+                                mode: CupertinoDatePickerMode.dateAndTime,
+                                onDateTimeChanged: (DateTime newDate) {
+                                  _startDateController.text =
+                                      "${newDate.year}/${newDate.month.toString().padLeft(2, '0')}/${newDate.day.toString().padLeft(2, '0')} ${newDate.hour.toString().padLeft(2, '0')}:${newDate.minute.toString().padLeft(2, '0')}";
+                                  startDateText =
+                                      "${newDate.year}${newDate.month.toString().padLeft(2, '0')}${newDate.day.toString().padLeft(2, '0')}T${newDate.hour.toString().padLeft(2, '0')}${newDate.minute.toString().padLeft(2, '0')}00";
+                                },
+                              ),
                             ),
                           );
                         });
                   },
-                  icon: const Icon(Icons.date_range_outlined, color: Colors.white,),
+                  icon: const Icon(
+                    Icons.date_range_outlined,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               reusableTextFormField(
@@ -82,23 +82,31 @@ class _VCardScreenState extends State<EventScreen> {
                     showCupertinoModalPopup(
                         context: context,
                         builder: (BuildContext context) {
-                          return CupertinoTheme(
-                            data: const CupertinoThemeData(
-                              brightness: Brightness.dark,
-                            ),
-                            child: CupertinoDatePicker(
-                              mode: CupertinoDatePickerMode.dateAndTime,
-                              onDateTimeChanged: (DateTime newDate) {
-                                _endDateController.text =
-                                    "${newDate.year}/${newDate.month.toString().padLeft(2, '0')}/${newDate.day.toString().padLeft(2, '0')} ${newDate.hour.toString().padLeft(2, '0')}:${newDate.minute.toString().padLeft(2, '0')}";
-                                endDateText =
-                                    "${newDate.year}${newDate.month.toString().padLeft(2, '0')}${newDate.day.toString().padLeft(2, '0')}T${newDate.hour.toString().padLeft(2, '0')}${newDate.minute.toString().padLeft(2, '0')}00";
-                              },
+                          return Container(
+                            height: 300,
+                            margin: const EdgeInsets.only(bottom: 100),
+                            color: ColorProvider.mainBackground,
+                            child: CupertinoTheme(
+                              data: const CupertinoThemeData(
+                                brightness: Brightness.dark,
+                              ),
+                              child: CupertinoDatePicker(
+                                mode: CupertinoDatePickerMode.dateAndTime,
+                                onDateTimeChanged: (DateTime newDate) {
+                                  _endDateController.text =
+                                      "${newDate.year}/${newDate.month.toString().padLeft(2, '0')}/${newDate.day.toString().padLeft(2, '0')} ${newDate.hour.toString().padLeft(2, '0')}:${newDate.minute.toString().padLeft(2, '0')}";
+                                  endDateText =
+                                      "${newDate.year}${newDate.month.toString().padLeft(2, '0')}${newDate.day.toString().padLeft(2, '0')}T${newDate.hour.toString().padLeft(2, '0')}${newDate.minute.toString().padLeft(2, '0')}00";
+                                },
+                              ),
                             ),
                           );
                         });
                   },
-                  icon: const Icon(Icons.date_range_outlined, color: Colors.white,),
+                  icon: const Icon(
+                    Icons.date_range_outlined,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               reusableElevatedButton(() {

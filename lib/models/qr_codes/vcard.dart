@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'vcard.g.dart';
@@ -46,4 +47,9 @@ class VCardModel {
     this.birthDay,
     this.note,
   );
+
+  @override
+  String toString() {
+    return 'VCardModel(firstName: $firstName, lastName: $lastName, number: $number, nickname: $nickname, url: $url, street: $street, city: $city, country: $country, birthDay: $birthDay, note: $note)';
+  }
 }

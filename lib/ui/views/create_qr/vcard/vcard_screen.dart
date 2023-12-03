@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,9 +24,6 @@ class _VCardScreenState extends State<VCardScreen> {
   final TextEditingController _nickNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _websiteController = TextEditingController();
-  final TextEditingController _streetController = TextEditingController();
-  final TextEditingController _cityController = TextEditingController();
-  final TextEditingController _countryController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   String birthDayText = "";
@@ -56,9 +55,6 @@ class _VCardScreenState extends State<VCardScreen> {
                   "Website",
                   _websiteController,
                 ),
-                reusableTextFormField("Street", _streetController),
-                reusableTextFormField("City", _cityController),
-                reusableTextFormField("Country", _countryController),
                 reusableTextFormField(
                   "Birthday",
                   _birthdayController,
@@ -68,18 +64,23 @@ class _VCardScreenState extends State<VCardScreen> {
                       showCupertinoModalPopup(
                           context: context,
                           builder: (BuildContext context) {
-                            return CupertinoTheme(
-                              data: const CupertinoThemeData(
-                                brightness: Brightness.dark,
-                              ),
-                              child: CupertinoDatePicker(
-                                mode: CupertinoDatePickerMode.dateAndTime,
-                                onDateTimeChanged: (DateTime newDate) {
-                                  _birthdayController.text =
-                                      "${newDate.year}/${newDate.month.toString().padLeft(2, '0')}/${newDate.day.toString().padLeft(2, '0')}";
-                                  birthDayText =
-                                      "${newDate.year}${newDate.month.toString().padLeft(2, '0')}${newDate.day.toString().padLeft(2, '0')}";
-                                },
+                            return Container(
+                              height: 300,
+                              margin: const EdgeInsets.only(bottom: 100),
+                              color: ColorProvider.mainBackground,
+                              child: CupertinoTheme(
+                                data: const CupertinoThemeData(
+                                  brightness: Brightness.dark,
+                                ),
+                                child: CupertinoDatePicker(
+                                  mode: CupertinoDatePickerMode.date,
+                                  onDateTimeChanged: (DateTime newDate) {
+                                    _birthdayController.text =
+                                        "${newDate.year}/${newDate.month.toString().padLeft(2, '0')}/${newDate.day.toString().padLeft(2, '0')}";
+                                    birthDayText =
+                                        "${newDate.year}${newDate.month.toString().padLeft(2, '0')}${newDate.day.toString().padLeft(2, '0')}";
+                                  },
+                                ),
                               ),
                             );
                           });
@@ -92,6 +93,18 @@ class _VCardScreenState extends State<VCardScreen> {
                 ),
                 reusableTextFormField("Note", _noteController),
                 reusableElevatedButton(() {
+                  log(VCardModel(
+                            _firstNameController.text,
+                            _lastNameController.text,
+                            _phoneNumberController.text,
+                            _nickNameController.text,
+                            _websiteController.text,
+                            "",
+                            "",
+                            "",
+                            _birthdayController.text,
+                            _noteController.text,
+                          ).toString());
                   context.read<CreateQrBloc>().add(
                         GenerateVCardEvent(
                           VCardModel(
@@ -100,9 +113,9 @@ class _VCardScreenState extends State<VCardScreen> {
                             _phoneNumberController.text,
                             _nickNameController.text,
                             _websiteController.text,
-                            _streetController.text,
-                            _cityController.text,
-                            _countryController.text,
+                            "",
+                            "",
+                            "",
                             _birthdayController.text,
                             _noteController.text,
                           ),

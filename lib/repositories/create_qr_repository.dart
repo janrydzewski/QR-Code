@@ -20,7 +20,7 @@ class CreateQrRepository{
   }
 
   String createVCardQrCode(VCardModel vCardModel){
-    return "MECARD:N:${vCardModel.lastName},${vCardModel.firstName};NICKNAME:${vCardModel.nickname};URL:${vCardModel.url};ADR:${vCardModel.street},${vCardModel.city},${vCardModel.country};BDAY:${vCardModel.birthDay};NOTE:${vCardModel.note};;";
+    return "MECARD:N:${vCardModel.lastName},${vCardModel.firstName};TEL:${vCardModel.number};NICKNAME:${vCardModel.nickname};URL:${vCardModel.url};NOTE:${vCardModel.note};;";
   }
 
   String createWifiQrCode(WifiModel wifiModel){
